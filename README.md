@@ -34,4 +34,4 @@ npm start
 ## 🧪 Verificación
 
 - En la página principal (`/`) deberías ver el mensaje del backend.
-- En `/api-docs` podés testear los endpoints con Swagger.
+- En `/api-docs` podés testear los endpoints con Swagger. 
