@@ -1,0 +1,58 @@
+# ========================
+# Node (backend & frontend)
+# ========================
+# Dependencias
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ========================
+# Cachés y build outputs
+# ========================
+# Caché de bundlers, esbuild, babel, etc.
+.cache/
+.parcel-cache/
+frontend/node_modules/.cache/
+backend/node_modules/.cache/
+
+# Directorios de salida
+build/
+dist/
+frontend/build/
+backend/dist/
+
+# ========================
+# Configs de entorno
+# ========================
+# Variables de entorno
+*.env
+*.env.local
+*.env.development.local
+*.env.test.local
+*.env.production.local
+
+# ========================
+# IDEs y sistema operativo
+# ========================
+# VS Code
+.vscode/
+
+# JetBrains IDEs (WebStorm, IntelliJ…)
+.idea/
+
+# Mac
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# ========================
+# Otros
+# ========================
+# Archivos de lock de log
+yarn.lock
+package-lock.json
+pnpm-lock.yaml
