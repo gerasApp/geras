@@ -4,10 +4,24 @@ import Simulate from './pages/Simulate';
 import Assets from './pages/Assets';
 
 function App() {
+  const navStyle = {
+    backgroundColor: '#1a1a1a',
+    padding: '1rem',
+    textAlign: 'center'
+  };
+
+  const linkStyle = {
+    color: '#fff',
+    textDecoration: 'none',
+    margin: '0 1rem'
+  };
   return (
     <Router>
       <nav>
-        <Link to="/">Simulador</Link> | <Link to="/activos">Activos</Link>
+        <div style={navStyle}>
+          <Link style={linkStyle} to="/">Simulador</Link>
+          <Link style={linkStyle} to="/activos">Activos</Link>
+        </div>
       </nav>
       <Routes>
         <Route path="/" element={<Simulate />} />
