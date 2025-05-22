@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
+const routes = require('./src/routes');
+const { API_ROUTES } = require('../shared/routes');
 
 const app = express();
 const PORT = 3001;
@@ -8,32 +10,8 @@ const PORT = 3001;
 app.use(cors());
 app.use(express.json());
 
-let assets = [];
-
-app.post('/simulate', (req, res) => {
-  const { initialAmount, monthlyContribution, rate, months } = req.body;
-  const points = [];
-  let total = initialAmount;
-
-  for (let i = 0; i <= months; i++) {
-    if (i > 0) total += monthlyContribution;
-    total *= (1 + rate / 100);
-    points.push({ month: i, value: parseFloat(total.toFixed(2)) });
-  }
-
-  res.json(points);
-});
-
-app.get('/assets', (req, res) => {
-  res.json(assets);
-});
-
-app.post('/assets', (req, res) => {
-  const { value, quantity, code, expectedReturn } = req.body;
-  const newAsset = { value, quantity, code, expectedReturn };
-  assets.push(newAsset);
-  res.status(201).json(newAsset);
-});
+// Montar todas las rutas bajo /api
+app.use(API_ROUTES.BASE, routes);
 
 // Swagger config
 const swaggerDocument = {
@@ -45,7 +23,7 @@ const swaggerDocument = {
   },
   servers: [{ url: "http://localhost:3001" }],
   paths: {
-    "/simulate": {
+    "/api/simulations/calculate": {
       post: {
         summary: "Simular crecimiento de inversión",
         requestBody: {
@@ -55,10 +33,22 @@ const swaggerDocument = {
               schema: {
                 type: "object",
                 properties: {
-                  initialAmount: { type: "number" },
-                  monthlyContribution: { type: "number" },
-                  rate: { type: "number" },
-                  months: { type: "number" }
+                  initialAmount: { 
+                    type: "number",
+                    description: "Monto inicial de la inversión"
+                  },
+                  monthlyContribution: { 
+                    type: "number",
+                    description: "Aporte mensual"
+                  },
+                  rate: { 
+                    type: "number",
+                    description: "Tasa de rendimiento anual (%)"
+                  },
+                  months: { 
+                    type: "number",
+                    description: "Duración en meses"
+                  }
                 }
               }
             }
@@ -66,17 +56,53 @@ const swaggerDocument = {
         },
         responses: {
           "200": {
-            description: "Resultados de la simulación"
+            description: "Resultados de la simulación",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "array",
+                  items: {
+                    type: "object",
+                    properties: {
+                      month: {
+                        type: "number",
+                        description: "Número de mes"
+                      },
+                      balance: {
+                        type: "number",
+                        description: "Balance acumulado"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
     },
-    "/assets": {
+    "/api/assets": {
       get: {
         summary: "Listar activos",
         responses: {
           "200": {
-            description: "Lista de activos"
+            description: "Lista de activos",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "array",
+                  items: {
+                    type: "object",
+                    properties: {
+                      value: { type: "number" },
+                      quantity: { type: "number" },
+                      code: { type: "string" },
+                      expectedReturn: { type: "number" }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -99,7 +125,22 @@ const swaggerDocument = {
           }
         },
         responses: {
-          "201": { description: "Activo creado" }
+          "201": { 
+            description: "Activo creado",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    value: { type: "number" },
+                    quantity: { type: "number" },
+                    code: { type: "string" },
+                    expectedReturn: { type: "number" }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }

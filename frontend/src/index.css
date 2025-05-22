@@ -1,3 +1,55 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Estilos globales para el modo oscuro */
+body.dark-mode {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+/* Transiciones suaves para cambios de modo */
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Estilos para contenedores en modo oscuro */
+body.dark-mode .bg-white {
+  background-color: #2d2d2d;
+}
+
+body.dark-mode .bg-gray-100 {
+  background-color: #333333;
+}
+
+/* Ajustes de color de texto en modo oscuro */
+body.dark-mode .text-gray-900 {
+  color: #ffffff;
+}
+
+body.dark-mode .text-gray-700 {
+  color: #e0e0e0;
+}
+
+/* Estilos para inputs en modo oscuro */
+body.dark-mode input,
+body.dark-mode select {
+  background-color: #404040;
+  color: #ffffff;
+  border-color: #666666;
+}
+
+body.dark-mode input:focus,
+body.dark-mode select:focus {
+  border-color: #4a9eff;
+  outline: none;
+}
+
+/* Estilos para botones en modo oscuro */
+body.dark-mode button {
+  transition: background-color 0.3s ease;
+}
+
+body.dark-mode button:hover {
+  opacity: 0.9;
+}

@@ -1,148 +1,209 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import Modal from '../components/Modal';
+import React, { useState, useEffect } from 'react';
+import { getAssets, createAsset } from '../services/api';
+import { useDarkModeContext } from '../context/DarkModeContext';
 
+/**
+ * Componente para mostrar y gestionar la lista de activos
+ */
 function Assets() {
-  // To make the white columns (the page background outside the container) dark, set the body background color.
-  // This can be done with a side effect:
+  const [assets, setAssets] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const { darkMode } = useDarkModeContext();
+
+  // Estado del formulario para nuevo activo
+  const [newAsset, setNewAsset] = useState({
+    name: '',
+    type: 'STOCK',
+    historicalReturn: 0,
+    risk: 'MEDIUM',
+    description: ''
+  });
+
+  // Cargar activos al montar el componente
   useEffect(() => {
-    document.body.style.backgroundColor = '#18181b';
-    return () => {
-      document.body.style.backgroundColor = '';
-    };
+    loadAssets();
   }, []);
-  // Dark mode styles (similar to Simulate.js)
+
+  // Función para cargar los activos
+  const loadAssets = async () => {
+    try {
+      const data = await getAssets();
+      setAssets(data);
+      setError(null);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Manejador de cambios en el formulario
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNewAsset(prev => ({
+      ...prev,
+      [name]: name === 'historicalReturn' ? Number(value) : value
+    }));
+  };
+
+  // Manejador de envío del formulario
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await createAsset(newAsset);
+      // Limpiar formulario
+      setNewAsset({
+        name: '',
+        type: 'STOCK',
+        historicalReturn: 0,
+        risk: 'MEDIUM',
+        description: ''
+      });
+      // Recargar lista de activos
+      await loadAssets();
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  // Estilos basados en el modo oscuro
   const containerStyle = {
-    backgroundColor: '#18181b',
+    backgroundColor: darkMode ? '#1a1a1a' : '#ffffff',
+    color: darkMode ? '#ffffff' : '#000000',
     minHeight: '100vh',
-    color: '#fff',
-    borderRadius: '0.5rem',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.2)'
+    padding: '2rem'
   };
 
   const cardStyle = {
-    backgroundColor: '#23232a',
-    color: '#fff',
-    border: '1px solid #333',
-    borderRadius: '0.5rem',
-    boxShadow: '0 1px 4px rgba(0,0,0,0.1)'
-  };
-
-  const buttonStyle = {
-    backgroundColor: '#22c55e',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '0.375rem',
-    padding: '0.5rem 1rem',
-    marginBottom: '1rem',
-    cursor: 'pointer'
+    backgroundColor: darkMode ? '#2d2d2d' : '#f8f9fa',
+    borderRadius: '8px',
+    padding: '2rem',
+    marginBottom: '2rem',
+    boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
   };
 
   const inputStyle = {
-    backgroundColor: '#18181b',
-    color: '#fff',
-    border: '1px solid #333',
-    borderRadius: '0.375rem',
-    padding: '0.5rem'
-  };
-  const [assets, setAssets] = useState([]);
-  const [showModal, setShowModal] = useState(false);
-  const [form, setForm] = useState({
-    value: 0,
-    quantity: 0,
-    code: '',
-    expectedReturn: 0
-  });
-
-  useEffect(() => {
-    axios.get('http://localhost:3001/assets')
-      .then(res => setAssets(res.data));
-  }, []);
-
-  const handleChange = e => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = () => {
-    axios.post('http://localhost:3001/assets', form)
-      .then(res => setAssets([...assets, res.data]));
-    setShowModal(false);
+    backgroundColor: darkMode ? '#404040' : '#ffffff',
+    color: darkMode ? '#ffffff' : '#000000',
+    border: `1px solid ${darkMode ? '#666666' : '#cccccc'}`,
+    borderRadius: '4px',
+    padding: '0.5rem',
+    width: '100%',
+    marginBottom: '1rem'
   };
 
   return (
-    <div className="max-w-xl mx-auto p-6 bg-[#18181b] min-h-screen">
-      <h2 className="text-2xl font-semibold mb-4 text-white">Gestión de Activos</h2>
-      
-      <button
-        onClick={() => setShowModal(true)}
-        className="bg-green-600 text-white px-4 py-2 mb-4 rounded hover:bg-green-700 transition"
-        style={buttonStyle}
-      >
-        + Agregar Activo
-      </button>
+    <div style={containerStyle}>
+      <div className="container mx-auto">
+        <div style={cardStyle}>
+          <h1 className="text-2xl font-bold mb-6">Gestión de Activos</h1>
 
-      <ul className="space-y-2">
-        {assets.map((a, i) => (
-          <li
-            key={i}
-            className="border p-2 rounded shadow"
-            style={{
-              backgroundColor: '#23232a',
-              color: '#fff',
-              border: '1px solid #333'
-            }}
-          >
-            {a.code} - {a.quantity} x ${a.value} ({a.expectedReturn}%)
-          </li>
-        ))}
-      </ul>
+          {/* Formulario para nuevo activo */}
+          <form onSubmit={handleSubmit} className="mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <input
+                style={inputStyle}
+                type="text"
+                name="name"
+                value={newAsset.name}
+                onChange={handleChange}
+                placeholder="Nombre del activo"
+                required
+              />
 
-      {showModal && (
-        <Modal onClose={() => setShowModal(false)}>
-          <div className="flex flex-col gap-2 bg-[#23232a] p-4 rounded">
-            <input
-              name="value"
-              type="number"
-              placeholder="Valor"
-              onChange={handleChange}
-              className="border p-2 rounded"
-              style={inputStyle}
-            />
-            <input
-              name="quantity"
-              type="number"
-              placeholder="Cantidad"
-              onChange={handleChange}
-              className="border p-2 rounded"
-              style={inputStyle}
-            />
-            <input
-              name="code"
-              placeholder="Código"
-              onChange={handleChange}
-              className="border p-2 rounded"
-              style={inputStyle}
-            />
-            <input
-              name="expectedReturn"
-              type="number"
-              placeholder="% Esperado"
-              onChange={handleChange}
-              className="border p-2 rounded"
-              style={inputStyle}
-            />
+              <select
+                style={inputStyle}
+                name="type"
+                value={newAsset.type}
+                onChange={handleChange}
+                required
+              >
+                <option value="STOCK">Acción</option>
+                <option value="BOND">Bono</option>
+                <option value="ETF">ETF</option>
+                <option value="CRYPTO">Criptomoneda</option>
+                <option value="MUTUAL_FUND">Fondo Mutuo</option>
+              </select>
+
+              <input
+                style={inputStyle}
+                type="number"
+                name="historicalReturn"
+                value={newAsset.historicalReturn}
+                onChange={handleChange}
+                placeholder="Retorno histórico (%)"
+                required
+                min="0"
+                step="0.01"
+              />
+
+              <select
+                style={inputStyle}
+                name="risk"
+                value={newAsset.risk}
+                onChange={handleChange}
+                required
+              >
+                <option value="LOW">Bajo</option>
+                <option value="MEDIUM">Medio</option>
+                <option value="HIGH">Alto</option>
+              </select>
+
+              <textarea
+                style={inputStyle}
+                name="description"
+                value={newAsset.description}
+                onChange={handleChange}
+                placeholder="Descripción"
+                className="md:col-span-2"
+              />
+            </div>
+
             <button
-              onClick={handleSubmit}
-              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+              type="submit"
+              className={`mt-4 px-6 py-2 rounded ${
+                darkMode
+                  ? 'bg-blue-600 hover:bg-blue-700'
+                  : 'bg-blue-500 hover:bg-blue-600'
+              } text-white`}
             >
-              Guardar
+              Agregar Activo
             </button>
-          </div>
-        </Modal>
-      )}
+          </form>
+
+          {error && (
+            <div className="text-red-500 mb-4">
+              {error}
+            </div>
+          )}
+
+          {loading ? (
+            <p>Cargando activos...</p>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {assets.map(asset => (
+                <div
+                  key={asset._id}
+                  className={`p-4 rounded ${
+                    darkMode ? 'bg-gray-800' : 'bg-white'
+                  } shadow`}
+                >
+                  <h3 className="font-bold mb-2">{asset.name}</h3>
+                  <p className="text-sm mb-1">Tipo: {asset.type}</p>
+                  <p className="text-sm mb-1">Retorno: {asset.historicalReturn}%</p>
+                  <p className="text-sm mb-1">Riesgo: {asset.risk}</p>
+                  {asset.description && (
+                    <p className="text-sm text-gray-600">{asset.description}</p>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
-
 }
 
 export default Assets;
