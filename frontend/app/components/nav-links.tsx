@@ -14,7 +14,7 @@ const links = [
   { name: 'Inicio', href: '/inicio', icon: HomeIcon },
   { name: 'Plan de retiro', href: '/inicio/plan', icon: ChartBarIcon },
   { name: 'Seguimiento', href: '/inicio/seguimiento', icon: MagnifyingGlassIcon },
-  { name: 'Configuración', href: '/inicio/configuracion', icon: Cog6ToothIcon },
+  { name: 'Ajustes', href: '/inicio/ajustes', icon: Cog6ToothIcon },
 ];
 
 
