@@ -1,11 +1,14 @@
 import NavLinks from '@/app/components/nav-links';
+import { UserCircleIcon } from '@heroicons/react/24/outline';
 
+
+//Habria que hacer que esto se esconda en un menu para celular asi no ocupa tanto espacio
 export default function Sidebar() {
   return (
-    <div className="flex h-full max-w-64 flex-col bg-white border-r border-gray-200">
+    <aside className="flex max-w-64 min-h-screen  flex-col bg-white border-r border-gray-200"> {/* Corregir lo de min-h-screen*/}
       {/* Logo Temporal */}
       <div className="flex h-16 items-center px-6">
-        
+
         <svg width="239" height="43" viewBox="0 0 239 43" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path fillRule="evenodd" clipRule="evenodd" d="M0 15V31H5C5.52527 31 6.04541 31.1035 6.53076 31.3045C7.01599 31.5055 7.45703 31.8001 7.82837 32.1716C8.19983 32.543 8.49451 32.984 8.69556 33.4693C8.89648 33.9546 9 34.4747 9 35V40H21L36 25V9H31C30.4747 9 29.9546 8.89655 29.4692 8.69553C28.984 8.49451 28.543 8.19986 28.1716 7.82843C27.8002 7.457 27.5055 7.01602 27.3044 6.53073C27.1035 6.04544 27 5.5253 27 5V0H15L0 15ZM17 30H10V19L19 10H26V21L17 30Z" fill="#0004E8"></path>
           <path d="M230.568 12.2458C233.094 12.2458 235.125 13.0258 236.66 14.5858C238.22 16.1211 239 18.2754 239 21.0487V33.1203H233.8V21.7545C233.8 20.1449 233.391 18.9192 232.574 18.0773C231.757 17.2106 230.643 16.7773 229.231 16.7773C227.82 16.7773 226.693 17.2106 225.851 18.0773C225.034 18.9192 224.626 20.1449 224.626 21.7545V33.1203H219.426V21.7545C219.426 20.1449 219.017 18.9192 218.2 18.0773C217.383 17.2106 216.268 16.7773 214.857 16.7773C213.421 16.7773 212.282 17.2106 211.44 18.0773C210.623 18.9192 210.214 20.1449 210.214 21.7545V33.1203H205.014V12.5429H210.214V15.0315C210.883 14.1649 211.737 13.4839 212.777 12.9887C213.842 12.4934 215.005 12.2458 216.268 12.2458C217.878 12.2458 219.314 12.5925 220.577 13.2858C221.84 13.9544 222.818 14.9201 223.511 16.183C224.18 14.9944 225.146 14.041 226.408 13.3229C227.696 12.6048 229.083 12.2458 230.568 12.2458Z" fill="#000150"></path>
@@ -20,11 +23,17 @@ export default function Sidebar() {
           <path d="M85.2062 35.8843C86.5234 39.8015 90.2256 42.6231 94.5867 42.6231H95.1294C100.594 42.6231 105.024 38.1932 105.024 32.7287V32.1696H99.6596V32.7287C99.6596 35.2307 97.6314 37.2589 95.1294 37.2589H94.5867C93.3116 37.2589 92.1595 36.7321 91.3363 35.8843H85.2062Z" fill="#000150"></path>
         </svg>
       </div>
+      
 
       {/* Navigation */}
       <nav className="flex-1 px-4 py-4 space-y-1">
         <NavLinks />
       </nav>
-    </div>
+      {/* Footer */}
+      <div className="flex h-16 items-center px-6 border-t border-gray-200">
+        <UserCircleIcon className= 'mr-2 h-8' />
+        Nombre Apellido
+      </div>
+    </aside>
   );
 }

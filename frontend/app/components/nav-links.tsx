@@ -4,7 +4,7 @@ import {
   HomeIcon,
   ChartBarIcon,
   MagnifyingGlassIcon,
-  Cog6ToothIcon,
+  UserIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -14,7 +14,6 @@ const links = [
   { name: 'Inicio', href: '/inicio', icon: HomeIcon },
   { name: 'Plan de retiro', href: '/inicio/plan', icon: ChartBarIcon },
   { name: 'Seguimiento', href: '/inicio/seguimiento', icon: MagnifyingGlassIcon },
-  { name: 'Ajustes', href: '/inicio/ajustes', icon: Cog6ToothIcon },
 ];
 
 
