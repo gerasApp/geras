@@ -4,8 +4,9 @@ Este proyecto es un simulador de inversiones que permite a los usuarios calcular
 
 ## Requisitos Previos
 
-- Node.js (v18 o superior)
+- Node.js (v20 o superior)
 - pnpm (v10)
+
 ```bash
 npm install -g pnpm@latest-10
 ```
@@ -80,10 +81,16 @@ pnpm lint
 ```
 
 ### 🧼 Formateo de código
-Para aplicar el formateo automático:
+
+Para verificar el formateo:
 
 ```sh
 pnpm format
+```
+
+Para arreglar automáticamente el código:
+```sh
+pnpm format:fix
 ```
 
 ### 🧪 Verificación de tipos
@@ -95,6 +102,7 @@ pnpm check-types
 ## Características
 
 ### Backend
+
 - API RESTful con Nest
 - Base de datos en memoria para desarrollo rápido
 - Documentación con Swagger
@@ -102,6 +110,7 @@ pnpm check-types
 - Manejo de errores centralizado
 
 ### Frontend
+
 - Interfaz de usuario moderna con React
 - Formulario de simulación de inversiones
 - Gestión de activos financieros
@@ -111,23 +120,29 @@ pnpm check-types
 ## API Endpoints
 
 ### Simulaciones
+
 - `POST /api/simulations/calculate` - Calcula una simulación de inversión
 
 ### Activos
+
 - `GET /api/assets` - Obtiene todos los activos
 - `POST /api/assets` - Crea un nuevo activo
 
 ## Configuración de Rutas
 
 ### Estado Actual
+
 Actualmente, las rutas de la API están definidas en dos archivos:
+
 - `frontend/src/shared/routes.js` - Configuración de rutas para el frontend
 - `backend/src/routes/index.js` - Configuración de rutas para el backend
 
 **Nota Importante:** Cualquier cambio en las rutas debe realizarse en ambos archivos para mantener la consistencia entre frontend y backend.
 
 ### Mejora Planificada
+
 Se planea mejorar este sistema utilizando un paquete npm local compartido que contendrá todas las definiciones de rutas, eliminando así la duplicación y posibles inconsistencias. Esta mejora permitirá:
+
 - Mantener un único punto de verdad para todas las rutas
 - Garantizar la consistencia entre frontend y backend
 - Facilitar el mantenimiento y las actualizaciones de rutas
@@ -136,14 +151,17 @@ Se planea mejorar este sistema utilizando un paquete npm local compartido que co
 ## Desarrollo
 
 ### Base de Datos
+
 Actualmente, el proyecto utiliza una base de datos en memoria para desarrollo. Los datos se perderán al reiniciar el servidor.
 
 ### Documentación
+
 La documentación completa de la API está disponible en la ruta `/api-docs` del backend.
 
 ## Estructura de Datos
 
 ### Simulación
+
 ```json
 {
   "initialAmount": number,
@@ -154,6 +172,7 @@ La documentación completa de la API está disponible en la ruta `/api-docs` del
 ```
 
 ### Activo
+
 ```json
 {
   "name": string,
