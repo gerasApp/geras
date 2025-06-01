@@ -1,66 +1,101 @@
-# Simulador de Inversiones
+# Turborepo starter
 
-Este proyecto es un simulador de inversiones que permite a los usuarios calcular rendimientos de inversiones y gestionar diferentes tipos de activos financieros.
-
-## Estructura del Proyecto
-
-```
-proyectoFinal/
-├── backend/         # Servidor Express
-├── frontend/        # Aplicación React
-└── shared/         # Tipos y utilidades compartidas
-```
+This Turborepo starter is maintained by the Turborepo core team.
 
 ## Requisitos Previos
 
-- Node.js (v14 o superior)
-- npm (v6 o superior)
+- Node.js (v18 o superior)
+- pnpm (v10)
+```bash
+npm install -g pnpm@latest-10
+```
+
+## Estructura
+
+```
+proyectoFinal/
+├── apps
+    ├──backend/
+    └── frontend/
+└── packages/
+```
+
+### Apps y paquetes
+
+- `frontend`: Frontend en [Next.js](https://nextjs.org/)
+- `backend`: Backend con [Nest.js](https://nextjs.org/)
+- `packages/eslint-config`: `eslint` Configuraciones de eslint
+- `packages/typescript-config`: `tsconfig.json` Configuraciones de typescript
+- `packages/shared`: Tipos y utilidades compartidas
 
 ## Instalación
 
-### Backend
+1. Clonar el repositorio
 
-1. Navegar al directorio del backend:
 ```bash
-cd backend
+git clone https://github.com/dteplitz/proyectoFinal.git
+cd proyectoFinal
 ```
 
-2. Instalar dependencias:
+2. Estando en el directorio raiz ejecutar:
+
 ```bash
-npm install
+pnpm install
 ```
 
-3. Iniciar el servidor:
-```bash
-npm start
+## Ejecutar el proyecto
+
+### 🚀 Servidor de desarrollo
+
+Para iniciar el servidor de desarrollo:
+
+```sh
+pnpm dev
 ```
 
-El servidor estará disponible en `http://localhost:3001`
-La documentación de la API estará disponible en `http://localhost:3001/api-docs`
+Esto inica tanto el Front como el Back.
 
-### Frontend
+El Front estará disponible en `http://localhost:3000`
 
-1. Navegar al directorio del frontend:
-```bash
-cd frontend
+El Backend estará disponible en `http://localhost:3001`
+
+> [!TIP]
+> Se pueden ejecutar las aplicaciones por separado ejecutando los scripts desde el directorio correspondiente: apps/backend o apps/frontend.
+> Esto tambien aplica para los siguientes scripts
+
+### 🛠️ Compilación (Build de producción)
+
+Para compilar todas las apps y paquetes:
+
+```sh
+pnpm build
 ```
 
-2. Instalar dependencias:
-```bash
-npm install
+### 🧹 Linting
+
+Para verificar errores de estilo y buenas prácticas:
+
+```sh
+pnpm lint
 ```
 
-3. Iniciar la aplicación:
-```bash
-npm start
+### 🧼 Formateo de código
+Para aplicar el formateo automático:
+
+```sh
+pnpm format
 ```
 
-La aplicación estará disponible en `http://localhost:3000`
+### 🧪 Verificación de tipos
+
+```sh
+pnpm check-types
+```
 
 ## Características
 
 ### Backend
-- API RESTful con Express
+- API RESTful con Nest
 - Base de datos en memoria para desarrollo rápido
 - Documentación con Swagger
 - Validación de datos
