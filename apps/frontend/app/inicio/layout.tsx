@@ -1,4 +1,4 @@
-import SideBar from '@/app/components/sidebar';
+import SideBar from "@/app/components/sidebar";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -8,4 +8,3 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     </div>
   );
 }
-

@@ -1,0 +1,13 @@
+# Next.js specific ignores
+/.next/
+/out/
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Vercel
+.vercel
+
+# Next.js specific files
+*.pem
