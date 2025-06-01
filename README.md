@@ -1,6 +1,6 @@
-# Turborepo starter
+# Simulador de inversiones
 
-This Turborepo starter is maintained by the Turborepo core team.
+Este proyecto es un simulador de inversiones que permite a los usuarios calcular rendimientos de inversiones y gestionar diferentes tipos de activos financieros.
 
 ## Requisitos Previos
 
