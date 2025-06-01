@@ -15,8 +15,8 @@ npm install -g pnpm@latest-10
 ```
 proyectoFinal/
 ├── apps
-    ├──backend/
-    └── frontend/
+|   ├──backend/
+|   └── frontend/
 └── packages/
 ```
 
