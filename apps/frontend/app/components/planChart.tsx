@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   BarChart,
@@ -8,17 +8,13 @@ import {
   Tooltip,
   CartesianGrid,
   ResponsiveContainer,
-} from "recharts";
-import { RetirementPlan } from "@/app/lib/definitions";
-
-type Props = {
-  plan: RetirementPlan;
-};
+} from 'recharts';
+import { SimulationResult } from '@geras/types'; 
 
 const formatCurrency = (value: number) => {
-  return new Intl.NumberFormat("es-ES", {
-    style: "currency",
-    currency: "ARS",
+  return new Intl.NumberFormat('es-ES', {
+    style: 'currency',
+    currency: 'ARS',
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   }).format(value);
@@ -37,42 +33,29 @@ const formatYAxisTick = (value: number) => {
   return `$${value}`;
 };
 
-function generateChartData(plan: RetirementPlan) {
-  const { initialAmount, monthlyInversion, ReturnRate, duration } = plan;
-  const annualReturn = ReturnRate / 100;
 
-  const data = [];
-  let total = initialAmount;
-  let aportado = initialAmount;
+export default function PlanChart({ data } : { data: SimulationResult[] }) {
 
-  data.push({
-    año: 0,
-    total: parseFloat(total.toFixed(2)),
-    aportado: parseFloat(aportado.toFixed(2)),
-    interes: 0,
-  });
 
-  for (let año = 1; año <= duration; año++) {
-    const annualContribution = monthlyInversion * 12;
-
-    total = (total + annualContribution) * (1 + annualReturn);
-    aportado += annualContribution;
-    const interes = total - aportado;
-
-    data.push({
-      año,
-      total: parseFloat(total.toFixed(2)),
-      aportado: parseFloat(aportado.toFixed(2)),
-      interes: parseFloat(interes.toFixed(2)),
-    });
+  if (!data || data.length === 0) {
+    return (
+      <div className="bg-white rounded-xl shadow-lg p-6 w-full">
+        <div className="flex items-center justify-center h-[450px]">
+          <div className="text-gray-500">No hay datos para mostrar</div>
+        </div>
+      </div>
+    );
   }
 
-  return data;
-}
+  // Formatear los datos para el gráfico
+  const chartData = data.map(item => ({
+    año: item.year,
+    total: parseFloat(item.totalAmount.toFixed(2)),
+    aportado: parseFloat(item.contributions.toFixed(2)),
+    interes: parseFloat(item.interest.toFixed(2)),
+  }));
 
-export default function PlanChart({ plan }: Props) {
-  const data = generateChartData(plan);
-  const finalValues = data[data.length - 1];
+  const finalValues = chartData[chartData.length - 1];
 
   return (
     <div className="bg-white rounded-xl shadow-lg p-6 w-full">
@@ -104,7 +87,7 @@ export default function PlanChart({ plan }: Props) {
       <div className="h-[450px] w-full">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
-            data={data}
+            data={chartData}
             margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
           >
             <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
@@ -118,10 +101,10 @@ export default function PlanChart({ plan }: Props) {
               formatter={formatTooltipValue}
               labelFormatter={(label) => `Año ${label}`}
               contentStyle={{
-                backgroundColor: "white",
-                border: "1px solid #e5e7eb",
-                borderRadius: "8px",
-                boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+                backgroundColor: 'white',
+                border: '1px solid #e5e7eb',
+                borderRadius: '8px',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
               }}
             />
             <Bar

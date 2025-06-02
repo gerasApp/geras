@@ -1,31 +1,60 @@
 "use client";
 
-import { useState } from "react";
-import { RetirementPlan } from "@/app/lib/definitions";
+import { useState, useEffect } from "react";
+import { RetirementPlan, SimulationResult } from "@geras/types";
 import PlanChart from "@/app/components/planChart";
+import { simulatePlan } from "@/app/lib/api/plan/simulate";
 
 export default function RetirementForm() {
   const [plan, setPlan] = useState<RetirementPlan>({
-    initialAmount: 1000,
-    monthlyInversion: 100,
-    ReturnRate: 10,
-    duration: 30,
+    initialAmount: 0,
+    monthlyContribution: 0,
+    expectedReturnRate: 0,
+    duration: 0,
   });
 
+  const [simulationData, setSimulationData] = useState<SimulationResult[]>([]);
+
   const rendimientos = [
-    { name: "Conservador", ReturnRate: 8, riesgo: `Riesgo bajo` },
-    { name: "Moderado", ReturnRate: 10, riesgo: `Riesgo medio` },
-    { name: "Agresivo", ReturnRate: 12, riesgo: `Riesgo alto` },
+    { name: "Conservador", expectedReturnRate: 8, riesgo: `Riesgo bajo` },
+    { name: "Moderado", expectedReturnRate: 10, riesgo: `Riesgo medio` },
+    { name: "Agresivo", expectedReturnRate: 12, riesgo: `Riesgo alto` },
   ];
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
+  const handleSimulation = async (planData: RetirementPlan) => {
+    if (Object.keys(errors).length > 0) {
+      return;
+    }
+    try {
+      const results = await simulatePlan(planData);
+      setSimulationData(results);
+    } catch (error) {
+      console.error("Simulation error:", error);
+    }
+  };
+
+
+  useEffect(() => {
+    // Evitar llamadas a la API mientras se escribe
+    const timeoutId = setTimeout(() => {
+      handleSimulation(plan);
+    }, 500);
+
+    return () => clearTimeout(timeoutId);
+  }, [plan, errors]);
+
+  // TODO:
+  // mover esta validacion a zod y hacer que se ejecute antes de llamar a la API
   function validateInputs(name: string, value: number) {
     const newErrors = { ...errors };
 
     switch (name) {
       case "initialAmount":
-        if (value < 0) {
+        if (isNaN(value)) {
+          newErrors[name] = "El monto inicial debe ser un número válido";
+        } else if (value < 0) {
           newErrors[name] = "El monto inicial debe ser positivo";
         } else if (value > 10000000) {
           newErrors[name] = "El monto inicial es demasiado alto";
@@ -33,8 +62,10 @@ export default function RetirementForm() {
           delete newErrors[name];
         }
         break;
-      case "monthlyInversion":
-        if (value < 0) {
+      case "monthlyContribution":
+        if (isNaN(value)) {
+          newErrors[name] = "El aporte mensual debe ser un número válido";
+        } else if (value < 0) {
           newErrors[name] = "El aporte mensual debe ser positivo";
         } else if (value > 1000000) {
           newErrors[name] = "El aporte mensual es demasiado alto";
@@ -42,8 +73,10 @@ export default function RetirementForm() {
           delete newErrors[name];
         }
         break;
-      case "ReturnRate":
-        if (value < 0) {
+      case "expectedReturnRate":
+        if (isNaN(value)) {
+          newErrors[name] = "El rendimiento debe ser un número válido";
+        } else if (value < 0) {
           newErrors[name] = "El rendimiento debe ser positivo";
         } else if (value > 100) {
           newErrors[name] = "El rendimiento es demasiado alto (máx. 100%)";
@@ -52,7 +85,9 @@ export default function RetirementForm() {
         }
         break;
       case "duration":
-        if (value < 1) {
+        if (isNaN(value)) {
+          newErrors[name] = "La duración debe ser un número válido";
+        } else if (value < 1) {
           newErrors[name] = "La duración debe ser al menos 1 año";
         } else if (value > 100) {
           newErrors[name] = "La duración es demasiado larga (máx. 100 años)";
@@ -67,7 +102,7 @@ export default function RetirementForm() {
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
-    const numValue = parseFloat(value) || 0;
+    const numValue = parseFloat(value);
 
     validateInputs(name, numValue);
 
@@ -77,7 +112,6 @@ export default function RetirementForm() {
     }));
   }
 
-  /* Aca esta acoplado el grafico y el formulario despues hay que cambiarlo pero por ahora va*/
   return (
     <div className="space-y-8">
       <div className="bg-white p-6 rounded-xl shadow-lg">
@@ -98,9 +132,8 @@ export default function RetirementForm() {
                 onChange={handleChange}
                 min="0"
                 step="1000"
-                className={`w-full border rounded-lg px-3 py-2 pl-8 ${
-                  errors.initialAmount ? "border-red-500" : "border-gray-300"
-                }`}
+                className={`w-full border rounded-lg px-3 py-2 pl-8 ${errors.initialAmount ? "border-red-500" : "border-gray-300"
+                  }`}
               />
               <span className="absolute left-3 top-2 text-gray-500">$</span>
             </div>
@@ -118,20 +151,19 @@ export default function RetirementForm() {
             <div className="relative">
               <input
                 type="number"
-                name="monthlyInversion"
-                value={plan.monthlyInversion}
+                name="monthlyContribution"
+                value={plan.monthlyContribution}
                 onChange={handleChange}
                 min="0"
                 step="50"
-                className={`w-full border rounded-lg px-3 py-2 pl-8 ${
-                  errors.monthlyInversion ? "border-red-500" : "border-gray-300"
-                }`}
+                className={`w-full border rounded-lg px-3 py-2 pl-8 ${errors.monthlyContribution ? "border-red-500" : "border-gray-300"
+                  }`}
               />
               <span className="absolute left-3 top-2 text-gray-500">$</span>
             </div>
-            {errors.monthlyInversion && (
+            {errors.monthlyContribution && (
               <p className="text-red-500 text-xs mt-1">
-                {errors.monthlyInversion}
+                {errors.monthlyContribution}
               </p>
             )}
           </div>
@@ -144,17 +176,17 @@ export default function RetirementForm() {
               <input
                 type="number"
                 step="0.1"
-                name="ReturnRate"
-                value={plan.ReturnRate}
+                name="expectedReturnRate"
+                value={plan.expectedReturnRate}
                 onChange={handleChange}
                 min="0"
                 max="100"
-                className={`w-full border rounded-lg px-3 py-2 pr-8 ${errors.ReturnRate ? "border-red-500" : "border-gray-300"}`}
+                className={`w-full border rounded-lg px-3 py-2 pr-8 ${errors.expectedReturnRate ? "border-red-500" : "border-gray-300"}`}
               />
               <span className="absolute right-3 top-2 text-gray-500">%</span>
             </div>
-            {errors.ReturnRate && (
-              <p className="text-red-500 text-xs mt-1">{errors.ReturnRate}</p>
+            {errors.expectedReturnRate && (
+              <p className="text-red-500 text-xs mt-1">{errors.expectedReturnRate}</p>
             )}
           </div>
 
@@ -170,9 +202,8 @@ export default function RetirementForm() {
                 onChange={handleChange}
                 min="1"
                 max="100"
-                className={`w-full border rounded-lg px-3 py-2 pr-12 focus:border-transparent ${
-                  errors.duration ? "border-red-500" : "border-gray-300"
-                }`}
+                className={`w-full border rounded-lg px-3 py-2 pr-12 focus:border-transparent ${errors.duration ? "border-red-500" : "border-gray-300"
+                  }`}
               />
               <span className="absolute right-3 top-2 text-gray-500 text-sm">
                 años
@@ -196,8 +227,8 @@ export default function RetirementForm() {
                   onClick={() =>
                     setPlan({
                       initialAmount: plan.initialAmount,
-                      monthlyInversion: plan.monthlyInversion,
-                      ReturnRate: rendimiento.ReturnRate,
+                      monthlyContribution: plan.monthlyContribution,
+                      expectedReturnRate: rendimiento.expectedReturnRate,
                       duration: plan.duration,
                     })
                   }
@@ -207,7 +238,7 @@ export default function RetirementForm() {
                     {rendimiento.name}
                   </div>
                   <div className="text-xs text-gray-600">
-                    {rendimiento.riesgo} - {rendimiento.ReturnRate}% anual
+                    {rendimiento.riesgo} - {rendimiento.expectedReturnRate}% anual
                   </div>
                 </button>
               );
@@ -215,7 +246,7 @@ export default function RetirementForm() {
           </div>
         </div>
       </div>
-      <PlanChart plan={plan} />
+      <PlanChart data={simulationData} />
     </div>
   );
 }

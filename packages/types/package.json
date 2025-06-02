@@ -1,0 +1,27 @@
+{
+  "name": "@geras/types",
+  "version": "0.0.0",
+  "main": "index.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "lint": "eslint . --max-warnings 0",
+    "format": "prettier . --check ",
+    "format:fix": "prettier . --write"
+  },
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "devDependencies": {
+    "@geras/eslint-config": "workspace:*",
+    "@geras/typescript-config": "workspace:*",
+    "@types/node": "^22.10.7",
+    "typescript": "5.8.2"
+  },
+  "dependencies": {
+    "zod": "^3.25.48"
+  }
+}
