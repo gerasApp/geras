@@ -1,6 +1,8 @@
 import { RetirementPlan, SimulationResult } from "@geras/types";
 import { Injectable } from "@nestjs/common";
 
+// Este servicio se encarga de resolver la logica de negocio relacionada con los planes
+// Es uno solo pero pueden separarse en varios servicios si es necesario
 @Injectable()
 export class PlanService {
   async simulatePlan(data: RetirementPlan): Promise<SimulationResult[]> {
