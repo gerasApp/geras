@@ -1,14 +1,16 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
-import { PlanService } from './plan.service';
-import { RetirementPlanSchema } from '@geras/types';
-import type { RetirementPlan, SimulationResult } from '@geras/types';
+import { Controller, Post, Body } from "@nestjs/common";
+import { PlanService } from "./plan.service";
+import { RetirementPlanSchema } from "@geras/types";
+import type { RetirementPlan, SimulationResult } from "@geras/types";
 
 @Controller("plan")
 export class PlanController {
-  constructor(private readonly planService: PlanService) { }
+  constructor(private readonly planService: PlanService) {}
 
   @Post("simulate")
-  async simulatePlan(@Body() planData: RetirementPlan): Promise<SimulationResult[]> {
+  async simulatePlan(
+    @Body() planData: RetirementPlan,
+  ): Promise<SimulationResult[]> {
     const parsedData = RetirementPlanSchema.parse(planData);
     return this.planService.simulatePlan(parsedData);
   }

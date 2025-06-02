@@ -1,21 +1,15 @@
-import { RetirementPlan, SimulationResult } from '@geras/types';
-import { Injectable } from '@nestjs/common';
+import { RetirementPlan, SimulationResult } from "@geras/types";
+import { Injectable } from "@nestjs/common";
 
 @Injectable()
 export class PlanService {
   async simulatePlan(data: RetirementPlan): Promise<SimulationResult[]> {
-    console.log(data);
-    const {
-      duration,
-      initialAmount,
-      monthlyContribution,
-      expectedReturnRate,
-    } = data;
+    const { duration, initialAmount, monthlyContribution, expectedReturnRate } =
+      data;
 
     let total = initialAmount;
     let contribution = initialAmount;
     const annualReturn = expectedReturnRate / 100;
-
 
     const results: SimulationResult[] = [];
 
@@ -35,12 +29,11 @@ export class PlanService {
 
       results.push({
         year,
-        totalAmount: (total),
+        totalAmount: total,
         contributions: contribution,
         interest: interest,
       });
     }
-
 
     return results;
   }

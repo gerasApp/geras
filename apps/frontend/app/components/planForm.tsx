@@ -23,20 +23,19 @@ export default function RetirementForm() {
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-  const handleSimulation = async (planData: RetirementPlan) => {
-    if (Object.keys(errors).length > 0) {
-      return;
-    }
-    try {
-      const results = await simulatePlan(planData);
-      setSimulationData(results);
-    } catch (error) {
-      console.error("Simulation error:", error);
-    }
-  };
-
-
   useEffect(() => {
+    const handleSimulation = async (planData: RetirementPlan) => {
+      if (Object.keys(errors).length > 0) {
+        return;
+      }
+      try {
+        const results = await simulatePlan(planData);
+        setSimulationData(results);
+      } catch (error) {
+        console.error("Simulation error:", error);
+      }
+    };
+
     // Evitar llamadas a la API mientras se escribe
     const timeoutId = setTimeout(() => {
       handleSimulation(plan);
@@ -132,8 +131,9 @@ export default function RetirementForm() {
                 onChange={handleChange}
                 min="0"
                 step="1000"
-                className={`w-full border rounded-lg px-3 py-2 pl-8 ${errors.initialAmount ? "border-red-500" : "border-gray-300"
-                  }`}
+                className={`w-full border rounded-lg px-3 py-2 pl-8 ${
+                  errors.initialAmount ? "border-red-500" : "border-gray-300"
+                }`}
               />
               <span className="absolute left-3 top-2 text-gray-500">$</span>
             </div>
@@ -156,8 +156,11 @@ export default function RetirementForm() {
                 onChange={handleChange}
                 min="0"
                 step="50"
-                className={`w-full border rounded-lg px-3 py-2 pl-8 ${errors.monthlyContribution ? "border-red-500" : "border-gray-300"
-                  }`}
+                className={`w-full border rounded-lg px-3 py-2 pl-8 ${
+                  errors.monthlyContribution
+                    ? "border-red-500"
+                    : "border-gray-300"
+                }`}
               />
               <span className="absolute left-3 top-2 text-gray-500">$</span>
             </div>
@@ -186,7 +189,9 @@ export default function RetirementForm() {
               <span className="absolute right-3 top-2 text-gray-500">%</span>
             </div>
             {errors.expectedReturnRate && (
-              <p className="text-red-500 text-xs mt-1">{errors.expectedReturnRate}</p>
+              <p className="text-red-500 text-xs mt-1">
+                {errors.expectedReturnRate}
+              </p>
             )}
           </div>
 
@@ -202,8 +207,9 @@ export default function RetirementForm() {
                 onChange={handleChange}
                 min="1"
                 max="100"
-                className={`w-full border rounded-lg px-3 py-2 pr-12 focus:border-transparent ${errors.duration ? "border-red-500" : "border-gray-300"
-                  }`}
+                className={`w-full border rounded-lg px-3 py-2 pr-12 focus:border-transparent ${
+                  errors.duration ? "border-red-500" : "border-gray-300"
+                }`}
               />
               <span className="absolute right-3 top-2 text-gray-500 text-sm">
                 años
@@ -238,7 +244,8 @@ export default function RetirementForm() {
                     {rendimiento.name}
                   </div>
                   <div className="text-xs text-gray-600">
-                    {rendimiento.riesgo} - {rendimiento.expectedReturnRate}% anual
+                    {rendimiento.riesgo} - {rendimiento.expectedReturnRate}%
+                    anual
                   </div>
                 </button>
               );

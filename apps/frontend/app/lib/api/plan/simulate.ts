@@ -1,6 +1,8 @@
-import {RetirementPlan, RetirementPlanSchema, SimulationResult } from "@geras/types";
+import { RetirementPlan, SimulationResult } from "@geras/types";
 
-export async function simulatePlan(plan: RetirementPlan): Promise<SimulationResult[]> {
+export async function simulatePlan(
+  plan: RetirementPlan,
+): Promise<SimulationResult[]> {
   const response = await fetch("http://localhost:3001/plan/simulate", {
     method: "POST",
     headers: {

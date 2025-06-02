@@ -23,6 +23,7 @@
     "@geras/eslint-config": "workspace:*",
     "@geras/typescript-config": "workspace:*",
     "@geras/types": "workspace:*",
+    "@eslint/js": "^9.27.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

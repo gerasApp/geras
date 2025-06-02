@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   BarChart,
@@ -8,13 +8,13 @@ import {
   Tooltip,
   CartesianGrid,
   ResponsiveContainer,
-} from 'recharts';
-import { SimulationResult } from '@geras/types'; 
+} from "recharts";
+import { SimulationResult } from "@geras/types";
 
 const formatCurrency = (value: number) => {
-  return new Intl.NumberFormat('es-ES', {
-    style: 'currency',
-    currency: 'ARS',
+  return new Intl.NumberFormat("es-ES", {
+    style: "currency",
+    currency: "ARS",
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   }).format(value);
@@ -33,10 +33,7 @@ const formatYAxisTick = (value: number) => {
   return `$${value}`;
 };
 
-
-export default function PlanChart({ data } : { data: SimulationResult[] }) {
-
-
+export default function PlanChart({ data }: { data: SimulationResult[] }) {
   if (!data || data.length === 0) {
     return (
       <div className="bg-white rounded-xl shadow-lg p-6 w-full">
@@ -48,7 +45,7 @@ export default function PlanChart({ data } : { data: SimulationResult[] }) {
   }
 
   // Formatear los datos para el gráfico
-  const chartData = data.map(item => ({
+  const chartData = data.map((item) => ({
     año: item.year,
     total: parseFloat(item.totalAmount.toFixed(2)),
     aportado: parseFloat(item.contributions.toFixed(2)),
@@ -101,10 +98,10 @@ export default function PlanChart({ data } : { data: SimulationResult[] }) {
               formatter={formatTooltipValue}
               labelFormatter={(label) => `Año ${label}`}
               contentStyle={{
-                backgroundColor: 'white',
-                border: '1px solid #e5e7eb',
-                borderRadius: '8px',
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                backgroundColor: "white",
+                border: "1px solid #e5e7eb",
+                borderRadius: "8px",
+                boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
               }}
             />
             <Bar
