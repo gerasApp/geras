@@ -25,9 +25,10 @@ proyectoFinal/
 
 - `frontend`: Frontend en [Next.js](https://nextjs.org/)
 - `backend`: Backend con [Nest.js](https://nextjs.org/)
-- `packages/eslint-config`: `eslint` Configuraciones de eslint
-- `packages/typescript-config`: `tsconfig.json` Configuraciones de typescript
-- `packages/shared`: Tipos y utilidades compartidas
+- `packages`: Utilidades compartidas
+  - `packages/eslint-config`: `eslint` Configuraciones de eslint
+  - `packages/typescript-config`: `tsconfig.json` Configuraciones de typescript
+  - `packages/types`: Tipos compartidos
 
 ## Instalación
 
@@ -43,6 +44,7 @@ cd proyectoFinal
 ```bash
 pnpm install
 ```
+3. Crear archivos .env en cada aplicación de acuerdo al template  (`.env.example`)
 
 ## Ejecutar el proyecto
 
