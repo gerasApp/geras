@@ -5,8 +5,8 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "format": "prettier . --check ",
-    "format:fix": "prettier . --write"
+    "format": "prettier src --check ",
+    "format:fix": "prettier src --write"
   },
   "exports": {
     ".": {

@@ -3,7 +3,11 @@ import { RetirementPlan, SimulationResult } from "@geras/types";
 export async function simulatePlan(
   plan: RetirementPlan,
 ): Promise<SimulationResult[]> {
-  const response = await fetch("http://localhost:3001/plan/simulate", {
+  const api_url = process.env.NEXT_PUBLIC_API_URL;
+  if (!api_url) {
+    throw new Error("NEXT_PUBLIC_API_URL no está definida");
+  }
+  const response = await fetch(`${api_url}/plan/simulate`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

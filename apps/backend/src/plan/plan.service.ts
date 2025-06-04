@@ -5,10 +5,9 @@ import { Injectable } from "@nestjs/common";
 // Es uno solo pero pueden separarse en varios servicios si es necesario
 @Injectable()
 export class PlanService {
-  async simulatePlan(data: RetirementPlan): Promise<SimulationResult[]> {
+  simulatePlan(data: RetirementPlan): SimulationResult[] {
     const { duration, initialAmount, monthlyContribution, expectedReturnRate } =
       data;
-
     let total = initialAmount;
     let contribution = initialAmount;
     const annualReturn = expectedReturnRate / 100;
