@@ -11,3 +11,6 @@ next-env.d.ts
 
 # Next.js specific files
 *.pem
+
+node_modules/
+package-lock.json

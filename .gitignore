@@ -3,6 +3,7 @@
 # ========================
 # Dependencies
 node_modules/
+**/node_modules/
 .pnp
 .pnp.js
 
@@ -51,4 +52,15 @@ dist/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Build output
+.next/
+
+# Env files
+.env
+.env.*
+
+# lock files
+package-lock.json
+**/package-lock.json
 
