@@ -1,5 +1,6 @@
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
+import { SwaggerModule, DocumentBuilder } from "@nestjs/swagger";
 
 async function bootstrap() {
   if (!process.env.FRONTEND_URL) {
@@ -12,6 +13,16 @@ async function bootstrap() {
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
   });
+
+  // Configuración de Swagger
+  const config = new DocumentBuilder()
+    .setTitle("API de Simulación de Inversiones")
+    .setDescription("API para simular planes de inversión")
+    .setVersion("1.0")
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup("api-docs", app, document);
 
   const port = process.env.API_PORT;
   if (!port) {
