@@ -1,89 +1,58 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import TrackingForm from './components/TrackingForm';
-import TrackingList from './components/TrackingList';
-import TrackingSummary from './components/TrackingSummary';
-import { TrackingEntry, TrackingFormData } from '@/app/lib/api/seguimiento/types';
-import { getTrackingEntries, createTrackingEntry, deleteTrackingEntry } from '@/app/lib/api/seguimiento/seguimiento.service';
+import { Asset } from '@/app/lib/api/assets/types';
+import { getAllAssets, createAsset, deleteAsset } from '@/app/lib/api/assets/asset.service';
+import AssetManager from './components/AssetManager';
 
-export default function TrackingPage() {
-  const [entries, setEntries] = useState<TrackingEntry[]>([]);
+export default function SeguimientoPage() {
+  const [assets, setAssets] = useState<Asset[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Estado inicial del formulario
-  const [newEntry, setNewEntry] = useState<TrackingFormData>({
-    date: new Date().toISOString().split('T')[0] || new Date().toLocaleDateString('en-CA'),
-    amount: 0,
-    type: 'expense',
-    category: '',
-    description: ''
-  });
-
   useEffect(() => {
-    const loadEntries = async () => {
+    const loadAssets = async () => {
       try {
-        const data = await getTrackingEntries();
-        setEntries(data);
+        const data = await getAllAssets();
+        setAssets(data);
         setError(null);
       } catch (err) {
-        setError('Error al cargar los registros');
+        setError('Error al cargar los activos');
       } finally {
         setLoading(false);
       }
     };
 
-    loadEntries();
+    loadAssets();
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleCreate = async (data: any) => {
     try {
-      const createdEntry = await createTrackingEntry(newEntry);
-      setEntries(prev => [...prev, createdEntry]);
-      setNewEntry({
-        date: new Date().toISOString().split('T')[0] || new Date().toLocaleDateString('en-CA'),
-        amount: 0,
-        type: 'expense',
-        category: '',
-        description: ''
-      });
+      const createdAsset = await createAsset(data);
+      setAssets(prev => [...prev, createdAsset]);
       setError(null);
     } catch (err) {
-      setError('Error al crear el registro');
+      setError('Error al crear el activo');
     }
   };
 
   const handleDelete = async (id: string) => {
     try {
-      await deleteTrackingEntry(id);
-      setEntries(prev => prev.filter(entry => entry.id !== id));
+      await deleteAsset(id);
+      setAssets(prev => prev.filter(asset => asset._id !== id));
       setError(null);
     } catch (err) {
-      setError('Error al eliminar el registro');
+      setError('Error al eliminar el activo');
     }
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Seguimiento de Gastos e Ingresos</h1>
-
-      {/* Resumen */}
-      <TrackingSummary entries={entries} />
-
-      {/* Formulario */}
-      <TrackingForm 
-        newEntry={newEntry}
-        setNewEntry={setNewEntry}
-        onSubmit={handleSubmit}
-      />
-
-      {/* Lista de registros */}
-      <TrackingList 
-        entries={entries}
+    <div className="space-y-6">
+      <AssetManager 
+        assets={assets}
         loading={loading}
         error={error}
+        onCreate={handleCreate}
         onDelete={handleDelete}
       />
     </div>
