@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { Dispatch, SetStateAction } from 'react';
-import { TrackingFormData } from '@/app/lib/api/seguimiento/types';
+import { Dispatch, SetStateAction } from "react";
+import { TrackingFormData } from "@/app/lib/api/seguimiento/types";
 
 interface TrackingFormProps {
   newEntry: TrackingFormData;
@@ -9,12 +9,18 @@ interface TrackingFormProps {
   onSubmit: (e: React.FormEvent) => void;
 }
 
-export default function TrackingForm({ newEntry, setNewEntry, onSubmit }: TrackingFormProps) {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+export default function TrackingForm({
+  newEntry,
+  setNewEntry,
+  onSubmit,
+}: TrackingFormProps) {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
     const { name, value } = e.target;
-    setNewEntry(prev => ({
+    setNewEntry((prev) => ({
       ...prev,
-      [name]: name === 'amount' ? Number(value) : value
+      [name]: name === "amount" ? Number(value) : value,
     }));
   };
 
@@ -24,7 +30,10 @@ export default function TrackingForm({ newEntry, setNewEntry, onSubmit }: Tracki
         Tu plan de seguimiento
       </h2>
 
-      <form onSubmit={onSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <form
+        onSubmit={onSubmit}
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+      >
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Fecha
@@ -124,4 +133,4 @@ export default function TrackingForm({ newEntry, setNewEntry, onSubmit }: Tracki
       </form>
     </div>
   );
-} 
+}

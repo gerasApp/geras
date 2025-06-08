@@ -1,8 +1,18 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Asset, CreateAssetDto, AssetType, RiskLevel } from '@/app/lib/api/assets/types';
-import { getAllAssets, createAsset, updateAsset, deleteAsset } from '@/app/lib/api/assets/asset.service';
+import { useState } from "react";
+import {
+  Asset,
+  CreateAssetDto,
+  AssetType,
+  RiskLevel,
+} from "@/app/lib/api/assets/types";
+import {
+  getAllAssets,
+  createAsset,
+  updateAsset,
+  deleteAsset,
+} from "@/app/lib/api/assets/asset.service";
 
 interface AssetManagerProps {
   assets: Asset[];
@@ -12,14 +22,20 @@ interface AssetManagerProps {
   onDelete: (id: string) => Promise<void>;
 }
 
-export default function AssetManager({ assets, loading, error, onCreate, onDelete }: AssetManagerProps) {
+export default function AssetManager({
+  assets,
+  loading,
+  error,
+  onCreate,
+  onDelete,
+}: AssetManagerProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newAsset, setNewAsset] = useState<CreateAssetDto>({
-    name: '',
+    name: "",
     type: AssetType.STOCK,
     historicalReturn: 0,
     risk: RiskLevel.MEDIUM,
-    description: ''
+    description: "",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -27,11 +43,11 @@ export default function AssetManager({ assets, loading, error, onCreate, onDelet
     await onCreate(newAsset);
     setIsModalOpen(false);
     setNewAsset({
-      name: '',
+      name: "",
       type: AssetType.STOCK,
       historicalReturn: 0,
       risk: RiskLevel.MEDIUM,
-      description: ''
+      description: "",
     });
   };
 
@@ -59,11 +75,21 @@ export default function AssetManager({ assets, loading, error, onCreate, onDelet
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Retorno Histórico</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Riesgo</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Nombre
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Tipo
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Retorno Histórico
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Riesgo
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Acciones
+              </th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
@@ -71,7 +97,9 @@ export default function AssetManager({ assets, loading, error, onCreate, onDelet
               <tr key={asset._id} className="hover:bg-gray-50">
                 <td className="px-6 py-4 whitespace-nowrap">{asset.name}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{asset.type}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{asset.historicalReturn}%</td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {asset.historicalReturn}%
+                </td>
                 <td className="px-6 py-4 whitespace-nowrap">{asset.risk}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <button
@@ -93,20 +121,31 @@ export default function AssetManager({ assets, loading, error, onCreate, onDelet
             <h3 className="text-lg font-medium mb-4">Agregar Nuevo Activo</h3>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700">Nombre</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Nombre
+                </label>
                 <input
                   type="text"
                   value={newAsset.name}
-                  onChange={(e) => setNewAsset({ ...newAsset, name: e.target.value })}
+                  onChange={(e) =>
+                    setNewAsset({ ...newAsset, name: e.target.value })
+                  }
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                   required
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">Tipo</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Tipo
+                </label>
                 <select
                   value={newAsset.type}
-                  onChange={(e) => setNewAsset({ ...newAsset, type: e.target.value as AssetType })}
+                  onChange={(e) =>
+                    setNewAsset({
+                      ...newAsset,
+                      type: e.target.value as AssetType,
+                    })
+                  }
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                 >
                   <option value={AssetType.STOCK}>Acción</option>
@@ -117,20 +156,34 @@ export default function AssetManager({ assets, loading, error, onCreate, onDelet
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">Retorno Histórico (%)</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Retorno Histórico (%)
+                </label>
                 <input
                   type="number"
                   value={newAsset.historicalReturn}
-                  onChange={(e) => setNewAsset({ ...newAsset, historicalReturn: parseFloat(e.target.value) })}
+                  onChange={(e) =>
+                    setNewAsset({
+                      ...newAsset,
+                      historicalReturn: parseFloat(e.target.value),
+                    })
+                  }
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                   required
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">Riesgo</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Riesgo
+                </label>
                 <select
                   value={newAsset.risk}
-                  onChange={(e) => setNewAsset({ ...newAsset, risk: e.target.value as RiskLevel })}
+                  onChange={(e) =>
+                    setNewAsset({
+                      ...newAsset,
+                      risk: e.target.value as RiskLevel,
+                    })
+                  }
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                 >
                   <option value={RiskLevel.LOW}>Bajo</option>
@@ -139,10 +192,14 @@ export default function AssetManager({ assets, loading, error, onCreate, onDelet
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">Descripción</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Descripción
+                </label>
                 <textarea
                   value={newAsset.description}
-                  onChange={(e) => setNewAsset({ ...newAsset, description: e.target.value })}
+                  onChange={(e) =>
+                    setNewAsset({ ...newAsset, description: e.target.value })
+                  }
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                   rows={3}
                 />
@@ -168,4 +225,4 @@ export default function AssetManager({ assets, loading, error, onCreate, onDelet
       )}
     </div>
   );
-} 
+}

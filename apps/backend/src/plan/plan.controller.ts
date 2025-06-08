@@ -14,21 +14,21 @@ export class PlanController {
 
   @ApiOperation({ summary: "Simula un plan de inversión" })
   @ApiBody({ type: SimulatePlanDto })
-  @ApiResponse({ 
-    status: 200, 
+  @ApiResponse({
+    status: 200,
     description: "Simulación exitosa",
     schema: {
-      type: 'array',
+      type: "array",
       items: {
-        type: 'object',
+        type: "object",
         properties: {
-          year: { type: 'number', example: 1 },
-          totalAmount: { type: 'number', example: 110000 },
-          contributions: { type: 'number', example: 100000 },
-          interest: { type: 'number', example: 10000 }
-        }
-      }
-    }
+          year: { type: "number", example: 1 },
+          totalAmount: { type: "number", example: 110000 },
+          contributions: { type: "number", example: 100000 },
+          interest: { type: "number", example: 10000 },
+        },
+      },
+    },
   })
   @ApiResponse({ status: 400, description: "Datos inválidos" })
   @Post("simulate")

@@ -1,15 +1,15 @@
 export enum AssetType {
-  STOCK = 'STOCK',
-  BOND = 'BOND',
-  ETF = 'ETF',
-  CRYPTO = 'CRYPTO',
-  MUTUAL_FUND = 'MUTUAL_FUND'
+  STOCK = "STOCK",
+  BOND = "BOND",
+  ETF = "ETF",
+  CRYPTO = "CRYPTO",
+  MUTUAL_FUND = "MUTUAL_FUND",
 }
 
 export enum RiskLevel {
-  LOW = 'LOW',
-  MEDIUM = 'MEDIUM',
-  HIGH = 'HIGH'
+  LOW = "LOW",
+  MEDIUM = "MEDIUM",
+  HIGH = "HIGH",
 }
 
 export interface Asset {
@@ -31,4 +31,4 @@ export interface CreateAssetDto {
   description: string;
 }
 
-export interface UpdateAssetDto extends Partial<CreateAssetDto> {} 
+export interface UpdateAssetDto extends Partial<CreateAssetDto> {}

@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import { Asset, AssetType, RiskLevel } from './asset.model';
+import { Injectable } from "@nestjs/common";
+import { Asset, AssetType, RiskLevel } from "./asset.model";
 
 @Injectable()
 export class AssetService {
@@ -11,22 +11,35 @@ export class AssetService {
   }
 
   private validateAssetData(data: Partial<Asset>): void {
-    if (!data.name || typeof data.name !== 'string' || data.name.trim().length === 0) {
-      throw new Error('El nombre del activo es requerido y debe ser una cadena válida');
+    if (
+      !data.name ||
+      typeof data.name !== "string" ||
+      data.name.trim().length === 0
+    ) {
+      throw new Error(
+        "El nombre del activo es requerido y debe ser una cadena válida",
+      );
     }
 
     const validTypes = Object.values(AssetType);
     if (!data.type || !validTypes.includes(data.type)) {
-      throw new Error(`El tipo de activo debe ser uno de: ${validTypes.join(', ')}`);
+      throw new Error(
+        `El tipo de activo debe ser uno de: ${validTypes.join(", ")}`,
+      );
     }
 
-    if (typeof data.historicalReturn !== 'number' || data.historicalReturn < 0) {
-      throw new Error('El retorno histórico debe ser un número no negativo');
+    if (
+      typeof data.historicalReturn !== "number" ||
+      data.historicalReturn < 0
+    ) {
+      throw new Error("El retorno histórico debe ser un número no negativo");
     }
 
     const validRisks = Object.values(RiskLevel);
     if (!data.risk || !validRisks.includes(data.risk)) {
-      throw new Error(`El nivel de riesgo debe ser uno de: ${validRisks.join(', ')}`);
+      throw new Error(
+        `El nivel de riesgo debe ser uno de: ${validRisks.join(", ")}`,
+      );
     }
   }
 
@@ -47,7 +60,7 @@ export class AssetService {
       risk: assetData.risk!,
       description: assetData.description,
       createdAt: timestamp,
-      updatedAt: timestamp
+      updatedAt: timestamp,
     };
 
     this.assets.set(id, asset);
@@ -58,7 +71,10 @@ export class AssetService {
     return this.assets.get(id) || null;
   }
 
-  async updateAsset(id: string, assetData: Partial<Asset>): Promise<Asset | null> {
+  async updateAsset(
+    id: string,
+    assetData: Partial<Asset>,
+  ): Promise<Asset | null> {
     const existing = this.assets.get(id);
     if (!existing) return null;
 
@@ -68,7 +84,7 @@ export class AssetService {
       ...existing,
       ...assetData,
       _id: id,
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
 
     this.assets.set(id, updated);
@@ -78,4 +94,4 @@ export class AssetService {
   async deleteAsset(id: string): Promise<boolean> {
     return this.assets.delete(id);
   }
-} 
+}

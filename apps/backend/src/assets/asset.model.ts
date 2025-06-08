@@ -1,20 +1,20 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { Document } from "mongoose";
 
 export type AssetDocument = Asset & Document;
 
 export enum AssetType {
-  STOCK = 'STOCK',
-  BOND = 'BOND',
-  ETF = 'ETF',
-  CRYPTO = 'CRYPTO',
-  MUTUAL_FUND = 'MUTUAL_FUND'
+  STOCK = "STOCK",
+  BOND = "BOND",
+  ETF = "ETF",
+  CRYPTO = "CRYPTO",
+  MUTUAL_FUND = "MUTUAL_FUND",
 }
 
 export enum RiskLevel {
-  LOW = 'LOW',
-  MEDIUM = 'MEDIUM',
-  HIGH = 'HIGH'
+  LOW = "LOW",
+  MEDIUM = "MEDIUM",
+  HIGH = "HIGH",
 }
 
 @Schema()
@@ -23,28 +23,28 @@ export class Asset {
   _id?: string;
 
   @Prop({
-    required: [true, 'El nombre del activo es requerido'],
-    trim: true
+    required: [true, "El nombre del activo es requerido"],
+    trim: true,
   })
   name!: string;
 
   @Prop({
-    required: [true, 'El tipo de activo es requerido'],
+    required: [true, "El tipo de activo es requerido"],
     enum: Object.values(AssetType),
-    uppercase: true
+    uppercase: true,
   })
   type!: AssetType;
 
   @Prop({
-    required: [true, 'El retorno histórico es requerido'],
-    min: [0, 'El retorno histórico no puede ser negativo']
+    required: [true, "El retorno histórico es requerido"],
+    min: [0, "El retorno histórico no puede ser negativo"],
   })
   historicalReturn!: number;
 
   @Prop({
-    required: [true, 'El nivel de riesgo es requerido'],
+    required: [true, "El nivel de riesgo es requerido"],
     enum: Object.values(RiskLevel),
-    uppercase: true
+    uppercase: true,
   })
   risk!: RiskLevel;
 
@@ -61,7 +61,7 @@ export class Asset {
 export const AssetSchema = SchemaFactory.createForClass(Asset);
 
 // Middleware para actualizar updatedAt antes de cada save
-AssetSchema.pre('save', function(this: AssetDocument, next: () => void) {
+AssetSchema.pre("save", function (this: AssetDocument, next: () => void) {
   this.updatedAt = new Date();
   next();
-}); 
+});

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
@@ -7,7 +7,14 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   suffix?: string;
 }
 
-export default function Input({ label, error, prefix, suffix, className = '', ...props }: InputProps) {
+export default function Input({
+  label,
+  error,
+  prefix,
+  suffix,
+  className = "",
+  ...props
+}: InputProps) {
   return (
     <div>
       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -17,9 +24,9 @@ export default function Input({ label, error, prefix, suffix, className = '', ..
         <input
           {...props}
           className={`w-full border rounded-lg px-3 py-2 ${
-            prefix ? 'pl-8' : ''
-          } ${suffix ? 'pr-8' : ''} ${
-            error ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+            prefix ? "pl-8" : ""
+          } ${suffix ? "pr-8" : ""} ${
+            error ? "border-red-500" : "border-gray-300 dark:border-gray-600"
           } dark:bg-gray-700 dark:text-gray-300 ${className}`}
         />
         {prefix && (
@@ -33,9 +40,7 @@ export default function Input({ label, error, prefix, suffix, className = '', ..
           </span>
         )}
       </div>
-      {error && (
-        <p className="text-red-500 text-xs mt-1">{error}</p>
-      )}
+      {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
     </div>
   );
-} 
+}

@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { TrackingEntry } from '@/app/lib/api/seguimiento/types';
+import { TrackingEntry } from "@/app/lib/api/seguimiento/types";
 
 interface TrackingListProps {
   entries: TrackingEntry[];
@@ -18,7 +18,12 @@ const formatCurrency = (value: number) => {
   }).format(value);
 };
 
-export default function TrackingList({ entries, loading, error, onDelete }: TrackingListProps) {
+export default function TrackingList({
+  entries,
+  loading,
+  error,
+  onDelete,
+}: TrackingListProps) {
   if (loading) {
     return (
       <div className="bg-white rounded-xl shadow-lg p-6 w-full">
@@ -83,12 +88,14 @@ export default function TrackingList({ entries, loading, error, onDelete }: Trac
                     {new Date(entry.date).toLocaleDateString()}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm">
-                    <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                      entry.type === 'income' 
-                        ? 'bg-green-100 text-green-800'
-                        : 'bg-red-100 text-red-800'
-                    }`}>
-                      {entry.type === 'income' ? 'Ingreso' : 'Gasto'}
+                    <span
+                      className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                        entry.type === "income"
+                          ? "bg-green-100 text-green-800"
+                          : "bg-red-100 text-red-800"
+                      }`}
+                    >
+                      {entry.type === "income" ? "Ingreso" : "Gasto"}
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
@@ -116,4 +123,4 @@ export default function TrackingList({ entries, loading, error, onDelete }: Trac
       </div>
     </div>
   );
-} 
+}

@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { TrackingEntry } from '@/app/lib/api/seguimiento/types';
+import { TrackingEntry } from "@/app/lib/api/seguimiento/types";
 
 interface TrackingSummaryProps {
   entries: TrackingEntry[];
@@ -17,11 +17,11 @@ const formatCurrency = (value: number) => {
 
 export default function TrackingSummary({ entries }: TrackingSummaryProps) {
   const totalIncome = entries
-    .filter(entry => entry.type === 'income')
+    .filter((entry) => entry.type === "income")
     .reduce((sum, entry) => sum + entry.amount, 0);
 
   const totalExpenses = entries
-    .filter(entry => entry.type === 'expense')
+    .filter((entry) => entry.type === "expense")
     .reduce((sum, entry) => sum + entry.amount, 0);
 
   const balance = totalIncome - totalExpenses;
@@ -42,7 +42,9 @@ export default function TrackingSummary({ entries }: TrackingSummaryProps) {
           </p>
         </div>
         <div className="bg-amber-50 rounded-lg p-4 border-l-4 border-amber-500">
-          <h3 className="text-sm font-medium text-amber-800">Intereses Ganados</h3>
+          <h3 className="text-sm font-medium text-amber-800">
+            Intereses Ganados
+          </h3>
           <p className="text-2xl font-bold text-amber-900">
             {formatCurrency(balance)}
           </p>
@@ -50,4 +52,4 @@ export default function TrackingSummary({ entries }: TrackingSummaryProps) {
       </div>
     </div>
   );
-} 
+}
