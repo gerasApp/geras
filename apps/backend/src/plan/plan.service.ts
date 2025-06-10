@@ -10,7 +10,7 @@ export class PlanService {
       data;
     let total = initialAmount;
     let contribution = initialAmount;
-    const annualReturn = expectedReturnRate / 100;
+const monthlyReturn = Math.pow(1 + expectedReturnRate / 100, 1 / 12) - 1;
 
     const results: SimulationResult[] = [];
 
@@ -22,17 +22,23 @@ export class PlanService {
     });
 
     for (let year = 1; year <= duration; year++) {
-      const annualContribution = monthlyContribution * 12;
+      //const annualContribution = monthlyContribution * 12;
+      let annualContribution = 0;
 
-      total = (total + annualContribution) * (1 + annualReturn);
+      for (let month = 0; month < 12; month++) {
+        total += monthlyContribution;
+        total *= (1 + monthlyReturn); // AHORA ASUME QUE LA CONTRIBUCIÓN MENSUAL SE HACE AL PRINCIPIO DEL MES
+        annualContribution += monthlyContribution;
+      }
+
       contribution += annualContribution;
       const interest = total - contribution;
 
       results.push({
         year,
-        totalAmount: total,
-        contributions: contribution,
-        interest: interest,
+        totalAmount: parseFloat(total.toFixed(2)),
+        contributions: parseFloat(contribution.toFixed(2)),
+        interest: parseFloat(interest.toFixed(2)),
       });
     }
 
