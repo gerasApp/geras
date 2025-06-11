@@ -16,9 +16,9 @@ export default function RetirementForm() {
   const [simulationData, setSimulationData] = useState<SimulationResult[]>([]);
 
   const rendimientos = [
-    { name: "Conservador", expectedReturnRate: 8, riesgo: `Riesgo bajo` },
-    { name: "Moderado", expectedReturnRate: 10, riesgo: `Riesgo medio` },
-    { name: "Agresivo", expectedReturnRate: 12, riesgo: `Riesgo alto` },
+    { name: "Conservador", expectedReturnRate: 2.5, riesgo: `Riesgo bajo` },
+    { name: "Moderado", expectedReturnRate: 5, riesgo: `Riesgo medio` },
+    { name: "Agresivo", expectedReturnRate: 8, riesgo: `Riesgo alto` },
   ];
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
