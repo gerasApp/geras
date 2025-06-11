@@ -11,8 +11,7 @@ import {
 } from "@nestjs/common";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { AssetService } from "./asset.service";
-import { Asset } from "./asset.model";
-import { CreateAssetDto } from "./dto/create-asset.dto";
+import { CreateAssetDto } from "@geras/types";
 
 @ApiTags("assets")
 @Controller("assets")

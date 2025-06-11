@@ -7,7 +7,7 @@ import {
   IsString,
   Min,
 } from "class-validator";
-import { AssetType, RiskLevel } from "../asset.model";
+import { AssetType, RiskLevel } from "./asset";
 
 export class CreateAssetDto {
   @ApiProperty({

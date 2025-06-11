@@ -4,7 +4,7 @@ import { RetirementPlanSchema } from "@geras/types";
 import { z } from "zod/v4";
 import type { RetirementPlan, SimulationResult } from "@geras/types";
 import { ApiOperation, ApiResponse, ApiTags, ApiBody } from "@nestjs/swagger";
-import { SimulatePlanDto } from "./dto/simulate-plan.dto";
+import { SimulatePlanDto } from "@geras/types";
 
 // Este controlador se encarga de manejar las peticiones relacionadas con los planes
 @ApiTags("Planes")
