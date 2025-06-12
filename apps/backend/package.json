@@ -10,7 +10,7 @@
     "format": "prettier . --check ",
     "format:fix": "prettier . --write",
     "start": "nest start",
-    "dev": "pnpm prisma:migrate && nest start --watch",
+    "dev": "pwsh ./scripts/check-prisma.ps1 && nest start --watch",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --max-warnings 0",
     "check-types": "tsc --noEmit",
     "start:debug": "nest start --debug --watch",
