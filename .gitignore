@@ -77,3 +77,16 @@ package-lock.json
 # Node modules
 /node_modules/
 
+# Bases de datos SQLite
+/apps/backend/data/app.db
+/apps/backend/data/*.db
+/prisma/*.db
+*.db
+
+# Archivos de entorno de Prisma
+/apps/backend/prisma/.env
+/prisma/.env
+
+# (Opcional) Migraciones de Prisma, descomenta si no quieres versionarlas
+#/apps/backend/prisma/migrations/
+
