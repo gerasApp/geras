@@ -10,11 +10,13 @@
     "format": "prettier . --check ",
     "format:fix": "prettier . --write",
     "start": "nest start",
-    "dev": "nest start --watch",
+    "dev": "pnpm prisma:migrate && nest start --watch",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --max-warnings 0",
     "check-types": "tsc --noEmit",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main"
+    "start:prod": "node dist/main",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev --name auto"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
