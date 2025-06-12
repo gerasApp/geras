@@ -10,12 +10,17 @@
     "check-types": "turbo run check-types"
   },
   "devDependencies": {
+    "@prisma/client": "^6.9.0",
     "prettier": "^3.5.3",
+    "prisma": "^6.9.0",
     "turbo": "^2.5.4",
     "typescript": "5.8.2"
   },
   "packageManager": "pnpm@10.0.0",
   "engines": {
     "node": ">=18"
+  },
+  "dependencies": {
+    "@nestjs/mapped-types": "^2.0.5"
   }
 }

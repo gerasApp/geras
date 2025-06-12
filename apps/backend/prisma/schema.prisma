@@ -1,0 +1,38 @@
+datasource db {
+  provider = "sqlite"                 // ← cambia a "postgresql" o "mysql" y listo
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+    output = "../../node_modules/.prisma/client"
+}
+
+/* --- ENUMS --- */
+enum AssetType {
+  STOCK
+  BOND
+  ETF
+  CRYPTO
+  MUTUAL_FUND
+}
+
+enum RiskLevel {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+/* --- MODEL --- */
+model Asset {
+  id               Int        @id @default(autoincrement())  // simple para SQLite
+  name             String
+  type             AssetType
+  historicalReturn Float
+  risk             RiskLevel
+  description      String?
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+
+  @@map("assets")                                            // nombre real de tabla
+}
