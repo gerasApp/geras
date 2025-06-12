@@ -10,13 +10,13 @@
     "format": "prettier . --check ",
     "format:fix": "prettier . --write",
     "start": "nest start",
-    "dev": "pwsh ./scripts/check-prisma.ps1 && nest start --watch",
+    "dev": "pnpm prisma:migrate && nest start --watch",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --max-warnings 0",
     "check-types": "tsc --noEmit",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
-    "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate dev --name auto"
+    "prisma:generate": "prisma generate --schema ./prisma/schema.prisma",
+    "prisma:migrate": "prisma migrate dev --name auto ./prisma/schema.prisma"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
@@ -25,7 +25,7 @@
     "@nestjs/mongoose": "^11.0.3",
     "@nestjs/platform-express": "^11.0.1",
     "@nestjs/swagger": "^11.2.0",
-    "@prisma/client": "^6.9.0",
+    "@prisma/client": "6.9.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.2",
     "mongoose": "^8.15.1",

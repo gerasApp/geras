@@ -11,9 +11,7 @@
     "setup": "pwsh ./scripts/setup.ps1"
   },
   "devDependencies": {
-    "@prisma/client": "^6.9.0",
     "prettier": "^3.5.3",
-    "prisma": "^6.9.0",
     "turbo": "^2.5.4",
     "typescript": "5.8.2"
   },
