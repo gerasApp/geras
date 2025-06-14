@@ -1,5 +1,5 @@
 datasource db {
-  provider = "sqlite"                 // ← cambia a "postgresql" o "mysql" y listo
+  provider = "sqlite" // ← cambia a "postgresql" o "mysql" y listo
   url      = env("DATABASE_URL")
 }
 
@@ -7,7 +7,9 @@ generator client {
   provider = "prisma-client-js"
 }
 
-/* --- ENUMS --- */
+/**
+ * --- ENUMS ---
+ */
 enum AssetType {
   STOCK
   BOND
@@ -22,16 +24,31 @@ enum RiskLevel {
   HIGH
 }
 
-/* --- MODEL --- */
+/**
+ * --- MODEL ---
+ */
 model Asset {
-  id               Int        @id @default(autoincrement())  // simple para SQLite
+  id               Int       @id @default(autoincrement()) // simple para SQLite
   name             String
   type             AssetType
   historicalReturn Float
   risk             RiskLevel
   description      String?
-  createdAt        DateTime   @default(now())
-  updatedAt        DateTime   @updatedAt
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
 
-  @@map("assets")                                            // nombre real de tabla
+  @@map("assets") // nombre real de tabla
+}
+
+model Plan {
+  id                  Int      @id @default(autoincrement())
+  userId              Int      @default(1) //por ahora, solo un usuario
+  initialAmount       Int
+  duration            Int
+  monthlyContribution Int
+  createdAt           DateTime @default(now())
+  objective           Int
+  expectedReturnRate  Float
+
+  @@map("plan")
 }

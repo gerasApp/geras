@@ -16,26 +16,24 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "prisma:generate": "prisma generate --schema ./prisma/schema.prisma",
-    "prisma:migrate": "prisma migrate dev --name auto ./prisma/schema.prisma"
+    "prisma:migrate": "prisma migrate dev --name auto ./prisma/schema.prisma",
+    "prisma:format": "prisma format"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.2",
     "@nestjs/core": "^11.0.1",
-    "@nestjs/mongoose": "^11.0.3",
     "@nestjs/platform-express": "^11.0.1",
     "@nestjs/swagger": "^11.2.0",
     "@prisma/client": "6.9.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.2",
-    "mongoose": "^8.15.1",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
     "swagger-ui-express": "^5.0.1",
     "zod": "^3.25.48"
   },
   "devDependencies": {
-    "@eslint/js": "^9.18.0",
     "@geras/eslint-config": "workspace:*",
     "@geras/types": "workspace:*",
     "@geras/typescript-config": "workspace:*",
@@ -52,7 +50,6 @@
     "ts-loader": "^9.5.2",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "5.8.2",
-    "typescript-eslint": "^8.20.0"
+    "typescript": "5.8.2"
   }
 }
