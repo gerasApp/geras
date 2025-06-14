@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Delete, Param, Put } from "@nestjs/common";
+import { Controller, Post, Body, Delete, Param, Put, Get } from "@nestjs/common";
 import { PlanService } from "./plan.service";
 import type { SimulationResult } from "@geras/types";
 import { ApiOperation, ApiResponse, ApiTags, ApiBody } from "@nestjs/swagger";
@@ -85,6 +85,26 @@ export class PlanController {
     } catch (error: any) {
       return {
         error: error.message || "Error al actualizar el plan",
+      };
+    }
+  }
+
+  @Get(":id")
+  @ApiOperation({ summary: "Obtener plan por id" })
+  @ApiResponse({ status: 200, description: "Plan encontrado" })
+  @ApiResponse({ status: 404, description: "Plan no encontrado" })
+  async getPlan(
+    @Param("id") id: string,
+  ) {
+    try {
+      const plan = await this.planService.getPlan(Number(id));
+      if (!plan) {
+        return { error: "Plan no encontrado" };
+      }
+      return plan;
+    } catch (error: any) {
+      return {
+        error: error.message || "Error al obtener el plan",
       };
     }
   }

@@ -80,4 +80,17 @@ export class PlanService {
       };
     }
   }
+
+  async getPlan(id: number): Promise<any> {
+    try {
+      const plan = await this.prisma.plan.findUnique({
+        where: { id },
+      });
+      return plan;
+    } catch (error: any) {
+      return {
+        error: error.message || "Error al obtener el plan",
+      };
+    }
+  }
 }
