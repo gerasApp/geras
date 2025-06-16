@@ -21,4 +21,5 @@ export interface Asset {
   description?: string;
   createdAt: Date;
   updatedAt: Date;
+  planId?: number;
 }

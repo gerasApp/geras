@@ -36,6 +36,8 @@ model Asset {
   description      String?
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
+  planId           Int?      // Optional foreign key
+  plan             Plan?     @relation(fields: [planId], references: [id])
 
   @@map("assets") // nombre real de tabla
 }
@@ -49,6 +51,7 @@ model Plan {
   createdAt           DateTime @default(now())
   objective           Int
   expectedReturnRate  Float
+  assets              Asset[]  // Add the reverse relation
 
   @@map("plan")
 }

@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { Asset, AssetType, RiskLevel } from "./asset.model";
 import { PrismaService } from "../prisma/prisma.service";
 import { CreateAssetDto, UpdateAssetDto } from "@geras/types";
@@ -8,7 +8,11 @@ export class AssetService {
   constructor(private prisma: PrismaService) {}
 
   async getAllAssets(): Promise<Asset[]> {
-    const assets = await this.prisma.asset.findMany();
+    const assets = await this.prisma.asset.findMany({
+      include: {
+        plan: true
+      }
+    });
     return assets.map(asset => ({
       id: asset.id,
       name: asset.name,
@@ -17,12 +21,23 @@ export class AssetService {
       risk: asset.risk as RiskLevel,
       description: asset.description || undefined,
       createdAt: asset.createdAt,
-      updatedAt: asset.updatedAt
+      updatedAt: asset.updatedAt,
+      planId: asset.planId || undefined
     }));
   }
 
   async createAsset(assetData: CreateAssetDto): Promise<Asset> {
     this.validateAssetData(assetData);
+
+    // Validate plan exists if planId is provided
+    if (assetData.planId) {
+      const plan = await this.prisma.plan.findUnique({
+        where: { id: assetData.planId }
+      });
+      if (!plan) {
+        throw new NotFoundException(`Plan with ID ${assetData.planId} not found`);
+      }
+    }
 
     const asset = await this.prisma.asset.create({
       data: {
@@ -30,7 +45,11 @@ export class AssetService {
         type: assetData.type as any,
         historicalReturn: assetData.historicalReturn,
         risk: assetData.risk as any,
-        description: assetData.description
+        description: assetData.description,
+        planId: assetData.planId
+      },
+      include: {
+        plan: true
       }
     });
 
@@ -42,12 +61,18 @@ export class AssetService {
       risk: asset.risk as RiskLevel,
       description: asset.description || undefined,
       createdAt: asset.createdAt,
-      updatedAt: asset.updatedAt
+      updatedAt: asset.updatedAt,
+      planId: asset.planId || undefined
     };
   }
 
   async getAssetById(id: number): Promise<Asset | null> {
-    const asset = await this.prisma.asset.findUnique({ where: { id } });
+    const asset = await this.prisma.asset.findUnique({ 
+      where: { id },
+      include: {
+        plan: true
+      }
+    });
     if (!asset) return null;
     
     return {
@@ -58,7 +83,8 @@ export class AssetService {
       risk: asset.risk as RiskLevel,
       description: asset.description || undefined,
       createdAt: asset.createdAt,
-      updatedAt: asset.updatedAt
+      updatedAt: asset.updatedAt,
+      planId: asset.planId || undefined
     };
   }
 
@@ -71,6 +97,16 @@ export class AssetService {
 
     this.validateAssetData(assetData);
 
+    // Validate plan exists if planId is provided
+    if (assetData.planId) {
+      const plan = await this.prisma.plan.findUnique({
+        where: { id: assetData.planId }
+      });
+      if (!plan) {
+        throw new NotFoundException(`Plan with ID ${assetData.planId} not found`);
+      }
+    }
+
     const updated = await this.prisma.asset.update({
       where: { id },
       data: {
@@ -78,6 +114,9 @@ export class AssetService {
         type: assetData.type as any,
         risk: assetData.risk as any,
         updatedAt: new Date()
+      },
+      include: {
+        plan: true
       }
     });
 
@@ -89,7 +128,8 @@ export class AssetService {
       risk: updated.risk as RiskLevel,
       description: updated.description || undefined,
       createdAt: updated.createdAt,
-      updatedAt: updated.updatedAt
+      updatedAt: updated.updatedAt,
+      planId: updated.planId || undefined
     };
   }
 
