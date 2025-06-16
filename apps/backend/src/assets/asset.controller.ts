@@ -11,7 +11,7 @@ import {
 } from "@nestjs/common";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { AssetService } from "./asset.service";
-import { CreateAssetDto } from "@geras/types";
+import { CreateAssetDto, UpdateAssetDto } from "@geras/types";
 
 @ApiTags("assets")
 @Controller("assets")
@@ -71,7 +71,7 @@ export class AssetController {
   @ApiOperation({ summary: "Obtener un activo por ID" })
   @ApiResponse({ status: 200, description: "Activo encontrado" })
   @ApiResponse({ status: 404, description: "Activo no encontrado" })
-  async getAssetById(@Param("id") id: string) {
+  async getAssetById(@Param("id") id: number) {
     try {
       const asset = await this.assetService.getAssetById(id);
       if (!asset) {
@@ -91,7 +91,7 @@ export class AssetController {
   @ApiResponse({ status: 404, description: "Activo no encontrado" })
   @ApiResponse({ status: 400, description: "Datos de entrada inválidos" })
   async updateAsset(
-    @Param("id") id: string,
+    @Param("id") id: number,
     @Body() createAssetDto: CreateAssetDto,
   ) {
     try {
@@ -111,7 +111,7 @@ export class AssetController {
   @ApiOperation({ summary: "Eliminar un activo" })
   @ApiResponse({ status: 200, description: "Activo eliminado exitosamente" })
   @ApiResponse({ status: 404, description: "Activo no encontrado" })
-  async deleteAsset(@Param("id") id: string) {
+  async deleteAsset(@Param("id") id: number) {
     try {
       const deleted = await this.assetService.deleteAsset(id);
       if (!deleted) {

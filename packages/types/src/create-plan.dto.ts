@@ -1,11 +1,20 @@
 import { ApiProperty } from "@nestjs/swagger";
+import {
+  IsNotEmpty,
+  IsNumber,
+  IsPositive,
+  Max,
+  Min,
+} from "class-validator";
 
-export class SimulatePlanDto {
+export class CreatePlanDto {
   @ApiProperty({
     description: "Monto inicial de la inversión",
     example: 100000,
     minimum: 0,
   })
+  @IsNotEmpty()
+  @IsPositive()
   initialAmount!: number;
 
   @ApiProperty({
@@ -13,6 +22,10 @@ export class SimulatePlanDto {
     example: 10000,
     minimum: 0,
   })
+  @IsNotEmpty()
+  @IsNumber()
+  @Min(0)
+  @Max(100)
   monthlyContribution!: number;
 
   @ApiProperty({
@@ -21,6 +34,10 @@ export class SimulatePlanDto {
     minimum: 0,
     maximum: 100,
   })
+  @IsNotEmpty()
+  @IsNumber()
+  @Min(0)
+  @Max(100)
   expectedReturnRate!: number;
 
   @ApiProperty({
@@ -29,5 +46,9 @@ export class SimulatePlanDto {
     minimum: 1,
     maximum: 100,
   })
+  @IsNotEmpty()
+  @IsNumber()
+  @Min(0)
+  @Max(100)
   duration!: number;
 }

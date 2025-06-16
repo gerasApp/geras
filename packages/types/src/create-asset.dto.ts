@@ -52,4 +52,13 @@ export class CreateAssetDto {
   @IsString()
   @IsOptional()
   description?: string;
+
+  @ApiProperty({
+    description: "ID del plan al que pertenece el activo",
+    example: 1,
+    required: false,
+  })
+  @IsNumber()
+  @IsOptional()
+  planId?: number;
 }

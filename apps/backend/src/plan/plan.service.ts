@@ -1,16 +1,18 @@
-import { RetirementPlan, SimulationResult } from "@geras/types";
+import { CreatePlanDto, SimulationResult } from "@geras/types";
 import { Injectable } from "@nestjs/common";
+import { PrismaService } from "../prisma/prisma.service";
 
 // Este servicio se encarga de resolver la logica de negocio relacionada con los planes
 // Es uno solo pero pueden separarse en varios servicios si es necesario
 @Injectable()
 export class PlanService {
-  simulatePlan(data: RetirementPlan): SimulationResult[] {
+  constructor(private prisma: PrismaService) { }
+  simulatePlan(data: CreatePlanDto): SimulationResult[] {
     const { duration, initialAmount, monthlyContribution, expectedReturnRate } =
       data;
     let total = initialAmount;
     let contribution = initialAmount;
-const monthlyReturn = Math.pow(1 + expectedReturnRate / 100, 1 / 12) - 1;
+    const monthlyReturn = Math.pow(1 + expectedReturnRate / 100, 1 / 12) - 1;
 
     const results: SimulationResult[] = [];
 
@@ -43,5 +45,52 @@ const monthlyReturn = Math.pow(1 + expectedReturnRate / 100, 1 / 12) - 1;
     }
 
     return results;
+  }
+
+  async createPlan(data: CreatePlanDto): Promise<any> {
+    const simulation = this.simulatePlan(data);
+    const objective = simulation[simulation.length - 1]?.totalAmount || 0;
+    return this.prisma.plan.create({
+      data: {
+        ...data,
+        objective,
+      },
+    });
+  }
+
+  async deletePlan(id: number): Promise<boolean> {
+    try {
+      await this.prisma.plan.delete({ where: { id } });
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  async updatePlan(id: number, data: CreatePlanDto): Promise<any> {
+    try {
+      const updatedPlan = await this.prisma.plan.update({
+        where: { id },
+        data,
+      });
+      return updatedPlan;
+    } catch (error: any) {
+      return {
+        error: error.message || "Error al actualizar el plan",
+      };
+    }
+  }
+
+  async getPlan(id: number): Promise<any> {
+    try {
+      const plan = await this.prisma.plan.findUnique({
+        where: { id },
+      });
+      return plan;
+    } catch (error: any) {
+      return {
+        error: error.message || "Error al obtener el plan",
+      };
+    }
   }
 }
