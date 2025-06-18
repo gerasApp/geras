@@ -10,7 +10,7 @@ services:
     sync: false
   - key: DATABASE_URL
     sync: false
-  - key: API_PORT
+  - key: PORT
     sync: false
   region: oregon
   buildCommand: cd ../.. && pnpm install --filter=\!frontend && pnpm build --filter=backend

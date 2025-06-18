@@ -8,6 +8,11 @@
       "outputs": [".next/**", "!.next/cache/**", "dist/**"],
       "env": ["API_URL", "FRONTEND_URL", "PORT"]
     },
+    "start": {
+      "persistent": true,
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "env": ["API_URL", "FRONTEND_URL", "PORT"]
+    },
     "format:fix": {
       "dependsOn": ["^format:fix"]
     },

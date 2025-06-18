@@ -9,7 +9,7 @@
     "build": "prisma generate && nest build",
     "format": "prettier . --check ",
     "format:fix": "prettier . --write",
-    "start": "nest start",
+    "start": "pnpm prisma:migrate && nest start",
     "dev": "pnpm prisma:migrate && nest start --watch",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --max-warnings 0",
     "check-types": "tsc --noEmit",
