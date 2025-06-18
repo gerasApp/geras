@@ -1,0 +1,23 @@
+# Exported from Render on 2025-06-18T01:33:39Z
+services:
+- type: web
+  name: geras
+  runtime: node
+  repo: https://github.com/gerasApp/geras
+  plan: free
+  envVars:
+  - key: FRONTEND_URL
+    sync: false
+  - key: DATABASE_URL
+    sync: false
+  - key: API_PORT
+    sync: false
+  region: oregon
+  buildCommand: cd ../.. && pnpm install --filter=\!frontend && pnpm build --filter=backend
+  startCommand: pnpm start --filter=backend
+  autoDeployTrigger: checksPass
+  buildFilter:
+    ignoredPaths:
+    - apps/frontend
+  rootDir: apps/backend
+version: "1"
