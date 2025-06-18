@@ -2,6 +2,8 @@
   "name": "geras",
   "private": true,
   "scripts": {
+    "test": "turbo run test",
+    "test:watch": "turbo run test:watch",
     "build": "turbo run build",
     "start": "turbo run start",
     "dev": "turbo run dev",
@@ -9,9 +11,13 @@
     "format": "turbo run format",
     "format:fix": "turbo run format:fix",
     "check-types": "turbo run check-types",
-    "setup": "pwsh ./scripts/setup.ps1"
+    "setup": "pwsh ./scripts/setup.ps1",
+    "prepare": "husky"
   },
   "devDependencies": {
+    "eslint": "^9.29.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.2",
     "prettier": "^3.5.3",
     "turbo": "^2.5.4",
     "typescript": "5.8.2"
