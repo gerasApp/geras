@@ -24,9 +24,9 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup("api-docs", app, document);
 
-  const port = process.env.API_PORT;
+  const port = process.env.PORT;
   if (!port) {
-    throw new Error("No se encontró variable de entorno API_PORT");
+    throw new Error("No se encontró variable de entorno PORT");
   }
 
   await app.listen(port);
