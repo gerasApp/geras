@@ -64,3 +64,29 @@ Thumbs.db
 package-lock.json
 **/package-lock.json
 
+# Prisma/SQLite
+/apps/backend/data/
+/apps/backend/prisma/*.db
+/apps/backend/prisma/.env
+/prisma/*.db
+/prisma/.env
+
+# Prisma generated client (si lo generas fuera de node_modules)
+/.prisma/
+
+# Node modules
+/node_modules/
+
+# Bases de datos SQLite
+/apps/backend/data/app.db
+/apps/backend/data/*.db
+/prisma/*.db
+*.db
+
+# Archivos de entorno de Prisma
+/apps/backend/prisma/.env
+/prisma/.env
+
+# (Opcional) Migraciones de Prisma, descomenta si no quieres versionarlas
+#/apps/backend/prisma/migrations/
+
