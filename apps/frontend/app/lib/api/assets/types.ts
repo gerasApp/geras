@@ -31,4 +31,4 @@ export interface CreateAssetDto {
   description: string;
 }
 
-export interface UpdateAssetDto extends Partial<CreateAssetDto> {}
+export type UpdateAssetDto = Partial<CreateAssetDto>;

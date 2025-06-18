@@ -10,10 +10,10 @@ export class AssetService {
   async getAllAssets(): Promise<Asset[]> {
     const assets = await this.prisma.asset.findMany({
       include: {
-        plan: true
-      }
+        plan: true,
+      },
     });
-    return assets.map(asset => ({
+    return assets.map((asset) => ({
       id: asset.id,
       name: asset.name,
       type: asset.type as AssetType,
@@ -22,7 +22,7 @@ export class AssetService {
       description: asset.description || undefined,
       createdAt: asset.createdAt,
       updatedAt: asset.updatedAt,
-      planId: asset.planId || undefined
+      planId: asset.planId || undefined,
     }));
   }
 
@@ -32,10 +32,12 @@ export class AssetService {
     // Validate plan exists if planId is provided
     if (assetData.planId) {
       const plan = await this.prisma.plan.findUnique({
-        where: { id: assetData.planId }
+        where: { id: assetData.planId },
       });
       if (!plan) {
-        throw new NotFoundException(`Plan with ID ${assetData.planId} not found`);
+        throw new NotFoundException(
+          `Plan with ID ${assetData.planId} not found`,
+        );
       }
     }
 
@@ -46,11 +48,11 @@ export class AssetService {
         historicalReturn: assetData.historicalReturn,
         risk: assetData.risk as any,
         description: assetData.description,
-        planId: assetData.planId
+        planId: assetData.planId,
       },
       include: {
-        plan: true
-      }
+        plan: true,
+      },
     });
 
     return {
@@ -62,19 +64,19 @@ export class AssetService {
       description: asset.description || undefined,
       createdAt: asset.createdAt,
       updatedAt: asset.updatedAt,
-      planId: asset.planId || undefined
+      planId: asset.planId || undefined,
     };
   }
 
   async getAssetById(id: number): Promise<Asset | null> {
-    const asset = await this.prisma.asset.findUnique({ 
+    const asset = await this.prisma.asset.findUnique({
       where: { id },
       include: {
-        plan: true
-      }
+        plan: true,
+      },
     });
     if (!asset) return null;
-    
+
     return {
       id: asset.id,
       name: asset.name,
@@ -84,7 +86,7 @@ export class AssetService {
       description: asset.description || undefined,
       createdAt: asset.createdAt,
       updatedAt: asset.updatedAt,
-      planId: asset.planId || undefined
+      planId: asset.planId || undefined,
     };
   }
 
@@ -100,10 +102,12 @@ export class AssetService {
     // Validate plan exists if planId is provided
     if (assetData.planId) {
       const plan = await this.prisma.plan.findUnique({
-        where: { id: assetData.planId }
+        where: { id: assetData.planId },
       });
       if (!plan) {
-        throw new NotFoundException(`Plan with ID ${assetData.planId} not found`);
+        throw new NotFoundException(
+          `Plan with ID ${assetData.planId} not found`,
+        );
       }
     }
 
@@ -113,11 +117,11 @@ export class AssetService {
         ...assetData,
         type: assetData.type as any,
         risk: assetData.risk as any,
-        updatedAt: new Date()
+        updatedAt: new Date(),
       },
       include: {
-        plan: true
-      }
+        plan: true,
+      },
     });
 
     return {
@@ -129,7 +133,7 @@ export class AssetService {
       description: updated.description || undefined,
       createdAt: updated.createdAt,
       updatedAt: updated.updatedAt,
-      planId: updated.planId || undefined
+      planId: updated.planId || undefined,
     };
   }
 

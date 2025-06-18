@@ -6,7 +6,6 @@ import { CreatePlanDto, SimulationResult } from "@geras/types";
 
 describe("PlanController", () => {
   let planController: PlanController;
-  let planService: PlanService;
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -15,12 +14,11 @@ describe("PlanController", () => {
       imports: [PrismaModule],
     }).compile();
 
-    planService = moduleRef.get(PlanService);
     planController = moduleRef.get(PlanController);
   });
 
   describe("simulate", () => {
-    let duration = 30;
+    const duration = 30;
     it("should return an array of yearly returns", () => {
       const mockInput: CreatePlanDto = {
         initialAmount: 100,

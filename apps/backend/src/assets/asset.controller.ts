@@ -11,29 +11,13 @@ import {
 } from "@nestjs/common";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { AssetService } from "./asset.service";
-import { CreateAssetDto, UpdateAssetDto } from "@geras/types";
+import { CreateAssetDto } from "@geras/types";
 
 @ApiTags("assets")
 @Controller("assets")
 @UsePipes(new ValidationPipe({ transform: true }))
 export class AssetController {
-  constructor(private readonly assetService: AssetService) {
-    // Verificar dependencias al iniciar
-    try {
-      require("class-validator");
-      require("class-transformer");
-    } catch (error) {
-      console.error(`
-        ⚠️  Dependencias faltantes para la validación de datos.
-        Por favor, instale las siguientes dependencias:
-        
-        pnpm add class-validator class-transformer --filter backend
-        
-        O ejecute:
-        npm install class-validator class-transformer
-      `);
-    }
-  }
+  constructor(private readonly assetService: AssetService) {}
 
   @Get()
   @ApiOperation({ summary: "Obtener todos los activos" })

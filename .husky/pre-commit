@@ -1,1 +1,1 @@
-pnpm format:fix && pnpm test -- --passWithNoTests
+pnpm format:fix && pnpm lint && pnpm test -- --passWithNoTests

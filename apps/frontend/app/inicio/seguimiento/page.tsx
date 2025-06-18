@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Asset } from "@/app/lib/api/assets/types";
+import { Asset, CreateAssetDto } from "@/app/lib/api/assets/types";
 import {
   getAllAssets,
   createAsset,
@@ -22,6 +22,7 @@ export default function SeguimientoPage() {
         setError(null);
       } catch (err) {
         setError("Error al cargar los activos");
+        console.error("Error al cargar los activos:", err); // TODO: modificar por otro servicio de log
       } finally {
         setLoading(false);
       }
@@ -30,13 +31,14 @@ export default function SeguimientoPage() {
     loadAssets();
   }, []);
 
-  const handleCreate = async (data: any) => {
+  const handleCreate = async (data: CreateAssetDto) => {
     try {
       const createdAsset = await createAsset(data);
       setAssets((prev) => [...prev, createdAsset]);
       setError(null);
     } catch (err) {
       setError("Error al crear el activo");
+      console.error("Error al crear el activo:", err); // TODO: modificar por otro servicio de log
     }
   };
 
@@ -47,6 +49,7 @@ export default function SeguimientoPage() {
       setError(null);
     } catch (err) {
       setError("Error al eliminar el activo");
+      console.error("Error al borrar los activos:", err); // TODO: modificar por otro servicio de log
     }
   };
 

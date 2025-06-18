@@ -1,4 +1,12 @@
-import { Controller, Post, Body, Delete, Param, Put, Get } from "@nestjs/common";
+import {
+  Controller,
+  Post,
+  Body,
+  Delete,
+  Param,
+  Put,
+  Get,
+} from "@nestjs/common";
 import { PlanService } from "./plan.service";
 import type { SimulationResult } from "@geras/types";
 import { ApiOperation, ApiResponse, ApiTags, ApiBody } from "@nestjs/swagger";
@@ -8,7 +16,7 @@ import { CreatePlanDto } from "@geras/types";
 @ApiTags("Planes")
 @Controller("plan")
 export class PlanController {
-  constructor(private readonly planService: PlanService) { }
+  constructor(private readonly planService: PlanService) {}
 
   @ApiOperation({ summary: "Simula un plan de inversión" })
   @ApiBody({ type: CreatePlanDto })
@@ -77,7 +85,10 @@ export class PlanController {
     @Body() createPlanDto: CreatePlanDto,
   ) {
     try {
-      const updated = await this.planService.updatePlan(Number(id), createPlanDto);
+      const updated = await this.planService.updatePlan(
+        Number(id),
+        createPlanDto,
+      );
       if (!updated) {
         return { error: "Plan no encontrado" };
       }
@@ -93,9 +104,7 @@ export class PlanController {
   @ApiOperation({ summary: "Obtener plan por id" })
   @ApiResponse({ status: 200, description: "Plan encontrado" })
   @ApiResponse({ status: 404, description: "Plan no encontrado" })
-  async getPlan(
-    @Param("id") id: string,
-  ) {
+  async getPlan(@Param("id") id: string) {
     try {
       const plan = await this.planService.getPlan(Number(id));
       if (!plan) {
@@ -108,6 +117,4 @@ export class PlanController {
       };
     }
   }
-
-
 }

@@ -1,5 +1,3 @@
-
-
 export type AssetDocument = Asset;
 
 export enum AssetType {

@@ -6,7 +6,7 @@ import { PrismaService } from "../prisma/prisma.service";
 // Es uno solo pero pueden separarse en varios servicios si es necesario
 @Injectable()
 export class PlanService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
   simulatePlan(data: CreatePlanDto): SimulationResult[] {
     const { duration, initialAmount, monthlyContribution, expectedReturnRate } =
       data;
@@ -29,7 +29,7 @@ export class PlanService {
 
       for (let month = 0; month < 12; month++) {
         total += monthlyContribution;
-        total *= (1 + monthlyReturn); // AHORA ASUME QUE LA CONTRIBUCIÓN MENSUAL SE HACE AL PRINCIPIO DEL MES
+        total *= 1 + monthlyReturn; // AHORA ASUME QUE LA CONTRIBUCIÓN MENSUAL SE HACE AL PRINCIPIO DEL MES
         annualContribution += monthlyContribution;
       }
 

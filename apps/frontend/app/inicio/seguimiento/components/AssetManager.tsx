@@ -7,12 +7,6 @@ import {
   AssetType,
   RiskLevel,
 } from "@/app/lib/api/assets/types";
-import {
-  getAllAssets,
-  createAsset,
-  updateAsset,
-  deleteAsset,
-} from "@/app/lib/api/assets/asset.service";
 
 interface AssetManagerProps {
   assets: Asset[];
