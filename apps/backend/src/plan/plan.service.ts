@@ -48,12 +48,25 @@ export class PlanService {
   }
 
   async createPlan(data: CreatePlanDto): Promise<any> {
-    const simulation = this.simulatePlan(data);
-    const objective = simulation[simulation.length - 1]?.totalAmount || 0;
+    // Check if plan with the same code already exists
+    const existingPlan = await this.prisma.plan.findUnique({
+      where: { code: data.code },
+    });
+
+    if (existingPlan) {
+      throw new Error(`Ya existe un plan con el código: ${data.code}`);
+    }
+
     return this.prisma.plan.create({
       data: {
-        ...data,
-        objective,
+        name: data.name,
+        code: data.code,
+        objective: data.objective,
+        type: data.type,
+        initialAmount: data.initialAmount,
+        duration: data.duration,
+        monthlyContribution: data.monthlyContribution,
+        expectedReturnRate: data.expectedReturnRate,
       },
     });
   }
@@ -69,9 +82,30 @@ export class PlanService {
 
   async updatePlan(id: number, data: CreatePlanDto): Promise<any> {
     try {
+      // Check if plan with the same code already exists (excluding current plan)
+      const existingPlan = await this.prisma.plan.findFirst({
+        where: {
+          code: data.code,
+          id: { not: id },
+        },
+      });
+
+      if (existingPlan) {
+        throw new Error(`Ya existe un plan con el código: ${data.code}`);
+      }
+
       const updatedPlan = await this.prisma.plan.update({
         where: { id },
-        data,
+        data: {
+          name: data.name,
+          code: data.code,
+          objective: data.objective,
+          type: data.type,
+          initialAmount: data.initialAmount,
+          duration: data.duration,
+          monthlyContribution: data.monthlyContribution,
+          expectedReturnRate: data.expectedReturnRate,
+        },
       });
       return updatedPlan;
     } catch (error: any) {

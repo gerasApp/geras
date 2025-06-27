@@ -1,4 +1,4 @@
-import { RetirementPlan, SimulationResult } from "@geras/types";
+import { RetirementPlan, SimulationResult } from "./types";
 
 export async function simulatePlan(
   plan: RetirementPlan,

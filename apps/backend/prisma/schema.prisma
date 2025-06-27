@@ -24,6 +24,11 @@ enum RiskLevel {
   HIGH
 }
 
+enum PlanType {
+  FINAL_AMOUNT
+  RENT
+}
+
 /**
  * --- MODEL ---
  */
@@ -45,11 +50,14 @@ model Asset {
 model Plan {
   id                  Int      @id @default(autoincrement())
   userId              Int      @default(1) //por ahora, solo un usuario
+  name                String
+  code                String   @unique
+  objective           Int
+  type                PlanType
   initialAmount       Int
   duration            Int
   monthlyContribution Int
   createdAt           DateTime @default(now())
-  objective           Int
   expectedReturnRate  Float
   assets              Asset[]  // Add the reverse relation
 

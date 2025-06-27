@@ -2,7 +2,7 @@ import { Test } from "@nestjs/testing";
 import { PlanController } from "./plan.controller";
 import { PlanService } from "./plan.service";
 import { PrismaModule } from "../prisma/prisma.module";
-import { CreatePlanDto, SimulationResult } from "@geras/types";
+import { CreatePlanDto, SimulationResult, PlanType } from "@geras/types";
 
 describe("PlanController", () => {
   let planController: PlanController;
@@ -21,6 +21,10 @@ describe("PlanController", () => {
     const duration = 30;
     it("should return an array of yearly returns", () => {
       const mockInput: CreatePlanDto = {
+        name: "Test Plan",
+        code: "TEST001",
+        objective: 1000000,
+        type: PlanType.FINAL_AMOUNT,
         initialAmount: 100,
         monthlyContribution: 100,
         expectedReturnRate: 5,
