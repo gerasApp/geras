@@ -36,8 +36,8 @@ describe("PlanController", () => {
       expect(result).toHaveLength(duration + 1);
       expect(result[0]).toHaveProperty("year");
       expect(result[0]).toHaveProperty("totalAmount");
-      expect(result[0]).toHaveProperty("contributions");
       expect(result[0]).toHaveProperty("interest");
+      expect(result[0]).toHaveProperty("contributions");
     });
   });
 });
