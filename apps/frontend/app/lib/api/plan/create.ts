@@ -1,8 +1,6 @@
 import { CreatePlanDto } from "./types";
 
-export async function createPlan(
-  plan: CreatePlanDto,
-): Promise<{
+export async function createPlan(plan: CreatePlanDto): Promise<{
   id: number;
   name: string;
   code: string;

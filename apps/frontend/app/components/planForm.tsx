@@ -225,7 +225,9 @@ export default function RetirementForm() {
       setShowSuccessPopup(true);
     } catch (error: unknown) {
       console.error("Error saving plan:", error);
-      alert(error instanceof Error ? error.message : "Error al guardar el plan");
+      alert(
+        error instanceof Error ? error.message : "Error al guardar el plan",
+      );
     } finally {
       setIsSaving(false);
     }
