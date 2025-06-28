@@ -6,6 +6,7 @@ import { RetirementPlan } from "@/app/lib/api/plan/types";
 import {
   getAllAssets,
   createAsset,
+  updateAsset,
   deleteAsset,
 } from "@/app/lib/api/assets/asset.service";
 import { getAllPlans } from "@/app/lib/api/plan/getAll";
@@ -49,6 +50,21 @@ export default function SeguimientoPage() {
     }
   };
 
+  const handleUpdate = async (id: string, data: CreateAssetDto) => {
+    try {
+      const updatedAsset = await updateAsset(id, data);
+      setAssets((prev) =>
+        prev.map((asset) =>
+          asset.id.toString() === id ? updatedAsset : asset,
+        ),
+      );
+      setError(null);
+    } catch (err) {
+      setError("Error al actualizar el activo");
+      console.error("Error al actualizar el activo:", err);
+    }
+  };
+
   const handleDelete = async (id: string) => {
     try {
       await deleteAsset(id);
@@ -68,6 +84,7 @@ export default function SeguimientoPage() {
         loading={loading}
         error={error}
         onCreate={handleCreate}
+        onUpdate={handleUpdate}
         onDelete={handleDelete}
       />
     </div>

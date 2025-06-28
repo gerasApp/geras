@@ -15,6 +15,7 @@ interface AssetManagerProps {
   loading: boolean;
   error: string | null;
   onCreate: (data: CreateAssetDto) => Promise<void>;
+  onUpdate: (id: string, data: CreateAssetDto) => Promise<void>;
   onDelete: (id: string) => Promise<void>;
 }
 
@@ -24,9 +25,12 @@ export default function AssetManager({
   loading,
   error,
   onCreate,
+  onUpdate,
   onDelete,
 }: AssetManagerProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editingAsset, setEditingAsset] = useState<Asset | null>(null);
   const [newAsset, setNewAsset] = useState<CreateAssetDto>({
     name: "",
     type: AssetType.STOCK,
@@ -48,6 +52,27 @@ export default function AssetManager({
       description: "",
       planId: undefined,
     });
+  };
+
+  const handleEdit = (asset: Asset) => {
+    setEditingAsset(asset);
+    setIsEditModalOpen(true);
+  };
+
+  const handleEditSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (editingAsset) {
+      await onUpdate(editingAsset.id.toString(), {
+        name: editingAsset.name,
+        type: editingAsset.type,
+        historicalReturn: editingAsset.historicalReturn,
+        risk: editingAsset.risk,
+        description: editingAsset.description,
+        planId: editingAsset.planId,
+      });
+      setIsEditModalOpen(false);
+      setEditingAsset(null);
+    }
   };
 
   const getPlanName = (planId?: number) => {
@@ -113,6 +138,12 @@ export default function AssetManager({
                   {getPlanName(asset.planId)}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
+                  <button
+                    onClick={() => handleEdit(asset)}
+                    className="text-blue-600 hover:text-blue-900 mr-2"
+                  >
+                    Editar
+                  </button>
                   <button
                     onClick={() => onDelete(asset.id.toString())}
                     className="text-red-600 hover:text-red-900"
@@ -243,6 +274,157 @@ export default function AssetManager({
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
+                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
+                >
+                  Guardar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {isEditModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-6 rounded-lg w-full max-w-md">
+            <h3 className="text-lg font-medium mb-4">Editar Activo</h3>
+            <form onSubmit={handleEditSubmit} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Nombre
+                </label>
+                <input
+                  type="text"
+                  value={editingAsset?.name || ""}
+                  onChange={(e) =>
+                    setEditingAsset(
+                      editingAsset
+                        ? { ...editingAsset, name: e.target.value }
+                        : null,
+                    )
+                  }
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Tipo
+                </label>
+                <select
+                  value={editingAsset?.type || AssetType.STOCK}
+                  onChange={(e) =>
+                    setEditingAsset(
+                      editingAsset
+                        ? { ...editingAsset, type: e.target.value as AssetType }
+                        : null,
+                    )
+                  }
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                >
+                  <option value={AssetType.STOCK}>Acción</option>
+                  <option value={AssetType.BOND}>Bono</option>
+                  <option value={AssetType.ETF}>ETF</option>
+                  <option value={AssetType.CRYPTO}>Criptomoneda</option>
+                  <option value={AssetType.MUTUAL_FUND}>Fondo Mutuo</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Retorno Histórico (%)
+                </label>
+                <input
+                  type="number"
+                  value={editingAsset?.historicalReturn || 0}
+                  onChange={(e) =>
+                    setEditingAsset(
+                      editingAsset
+                        ? {
+                            ...editingAsset,
+                            historicalReturn: parseFloat(e.target.value),
+                          }
+                        : null,
+                    )
+                  }
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Riesgo
+                </label>
+                <select
+                  value={editingAsset?.risk || RiskLevel.MEDIUM}
+                  onChange={(e) =>
+                    setEditingAsset(
+                      editingAsset
+                        ? { ...editingAsset, risk: e.target.value as RiskLevel }
+                        : null,
+                    )
+                  }
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                >
+                  <option value={RiskLevel.LOW}>Bajo</option>
+                  <option value={RiskLevel.MEDIUM}>Medio</option>
+                  <option value={RiskLevel.HIGH}>Alto</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Plan Asignado
+                </label>
+                <select
+                  value={editingAsset?.planId || ""}
+                  onChange={(e) =>
+                    setEditingAsset(
+                      editingAsset
+                        ? {
+                            ...editingAsset,
+                            planId: e.target.value
+                              ? parseInt(e.target.value)
+                              : undefined,
+                          }
+                        : null,
+                    )
+                  }
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                >
+                  <option value="">Sin asignar</option>
+                  {plans.map((plan) => (
+                    <option key={plan.id} value={plan.id}>
+                      {plan.name} ({plan.code})
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Descripción
+                </label>
+                <textarea
+                  value={editingAsset?.description || ""}
+                  onChange={(e) =>
+                    setEditingAsset(
+                      editingAsset
+                        ? { ...editingAsset, description: e.target.value }
+                        : null,
+                    )
+                  }
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  rows={3}
+                />
+              </div>
+              <div className="flex justify-end space-x-3">
+                <button
+                  type="button"
+                  onClick={() => setIsEditModalOpen(false)}
                   className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
                 >
                   Cancelar
