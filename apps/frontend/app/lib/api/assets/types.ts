@@ -13,7 +13,7 @@ export enum RiskLevel {
 }
 
 export interface Asset {
-  _id: string;
+  id: number;
   name: string;
   type: AssetType;
   historicalReturn: number;
@@ -21,6 +21,7 @@ export interface Asset {
   description: string;
   createdAt: string;
   updatedAt: string;
+  planId?: number;
 }
 
 export interface CreateAssetDto {
@@ -29,6 +30,7 @@ export interface CreateAssetDto {
   historicalReturn: number;
   risk: RiskLevel;
   description: string;
+  planId?: number;
 }
 
 export type UpdateAssetDto = Partial<CreateAssetDto>;

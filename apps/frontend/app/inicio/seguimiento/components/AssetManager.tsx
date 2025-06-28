@@ -7,9 +7,11 @@ import {
   AssetType,
   RiskLevel,
 } from "@/app/lib/api/assets/types";
+import { RetirementPlan } from "@/app/lib/api/plan/types";
 
 interface AssetManagerProps {
   assets: Asset[];
+  plans: RetirementPlan[];
   loading: boolean;
   error: string | null;
   onCreate: (data: CreateAssetDto) => Promise<void>;
@@ -18,6 +20,7 @@ interface AssetManagerProps {
 
 export default function AssetManager({
   assets,
+  plans,
   loading,
   error,
   onCreate,
@@ -30,6 +33,7 @@ export default function AssetManager({
     historicalReturn: 0,
     risk: RiskLevel.MEDIUM,
     description: "",
+    planId: undefined,
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -42,7 +46,14 @@ export default function AssetManager({
       historicalReturn: 0,
       risk: RiskLevel.MEDIUM,
       description: "",
+      planId: undefined,
     });
+  };
+
+  const getPlanName = (planId?: number) => {
+    if (!planId) return "Sin asignar";
+    const plan = plans.find((p) => p.id === planId);
+    return plan ? plan.name : "Plan no encontrado";
   };
 
   if (loading) {
@@ -82,13 +93,16 @@ export default function AssetManager({
                 Riesgo
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Plan Asignado
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Acciones
               </th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {assets.map((asset) => (
-              <tr key={asset._id} className="hover:bg-gray-50">
+              <tr key={asset.id} className="hover:bg-gray-50">
                 <td className="px-6 py-4 whitespace-nowrap">{asset.name}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{asset.type}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
@@ -96,8 +110,11 @@ export default function AssetManager({
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">{asset.risk}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
+                  {getPlanName(asset.planId)}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
                   <button
-                    onClick={() => onDelete(asset._id)}
+                    onClick={() => onDelete(asset.id.toString())}
                     className="text-red-600 hover:text-red-900"
                   >
                     Eliminar
@@ -183,6 +200,30 @@ export default function AssetManager({
                   <option value={RiskLevel.LOW}>Bajo</option>
                   <option value={RiskLevel.MEDIUM}>Medio</option>
                   <option value={RiskLevel.HIGH}>Alto</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Plan Asignado
+                </label>
+                <select
+                  value={newAsset.planId || ""}
+                  onChange={(e) =>
+                    setNewAsset({
+                      ...newAsset,
+                      planId: e.target.value
+                        ? parseInt(e.target.value)
+                        : undefined,
+                    })
+                  }
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                >
+                  <option value="">Sin asignar</option>
+                  {plans.map((plan) => (
+                    <option key={plan.id} value={plan.id}>
+                      {plan.name} ({plan.code})
+                    </option>
+                  ))}
                 </select>
               </div>
               <div>

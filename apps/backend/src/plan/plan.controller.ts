@@ -100,6 +100,23 @@ export class PlanController {
     }
   }
 
+  @Get()
+  @ApiOperation({ summary: "Obtener todos los planes" })
+  @ApiResponse({
+    status: 200,
+    description: "Lista de planes obtenida exitosamente",
+  })
+  async getAllPlans() {
+    try {
+      const plans = await this.planService.getAllPlans();
+      return plans;
+    } catch (error: any) {
+      return {
+        error: error.message || "Error al obtener los planes",
+      };
+    }
+  }
+
   @Get(":id")
   @ApiOperation({ summary: "Obtener plan por id" })
   @ApiResponse({ status: 200, description: "Plan encontrado" })

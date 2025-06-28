@@ -47,6 +47,22 @@ export class PlanService {
     return results;
   }
 
+  async getAllPlans(): Promise<any[]> {
+    try {
+      const plans = await this.prisma.plan.findMany({
+        include: {
+          assets: true,
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+      });
+      return plans;
+    } catch (error: any) {
+      throw new Error(String(error?.message) || "Error al obtener los planes");
+    }
+  }
+
   async createPlan(data: CreatePlanDto): Promise<any> {
     // Check if plan with the same code already exists
     const existingPlan = await this.prisma.plan.findUnique({
