@@ -63,3 +63,13 @@ model Plan {
 
   @@map("plan")
 }
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+
+  // plans     Plan[]   // Relation to Plan
+
+  @@map("user")
+}

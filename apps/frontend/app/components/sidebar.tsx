@@ -1,8 +1,9 @@
 import NavLinks from "@/app/components/nav-links";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
+import { User } from "@geras/types";
 
 //Habria que hacer que esto se esconda en un menu para celular asi no ocupa tanto espacio
-export default function Sidebar() {
+export default function Sidebar(user: User) {
   return (
     <aside className="flex max-w-64 min-h-screen  flex-col bg-white border-r border-gray-200">
       {" "}
@@ -71,7 +72,7 @@ export default function Sidebar() {
       {/* Footer */}
       <div className="flex h-16 items-center px-6 border-t border-gray-200">
         <UserCircleIcon className="mr-2 h-8" />
-        Nombre Apellido
+        {user.name}
       </div>
     </aside>
   );
