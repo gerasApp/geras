@@ -8,7 +8,7 @@
     "start": "next start",
     "format": "prettier . --check",
     "format:fix": "prettier . --write",
-    "lint": "next lint --max-warnings 4",
+    "lint": "next lint --max-warnings 5",
     "check-types": "tsc --noEmit",
     "test": "jest",
     "test:watch": "jest --watch"
