@@ -20,7 +20,9 @@
       "dependsOn": ["^format"]
     },
     "lint": {
-      "dependsOn": ["^lint"]
+      "dependsOn": ["^lint"],
+      "outputs": [],
+      "env": ["GITHUB_ID", "GITHUB_SECRET"]
     },
     "check-types": {
       "dependsOn": ["^check-types"]
