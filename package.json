@@ -26,6 +26,8 @@
     "node": ">=18"
   },
   "dependencies": {
-    "@nestjs/mapped-types": "^2.0.5"
+    "@nestjs/mapped-types": "^2.0.5",
+    "dotenv": "^17.0.0",
+    "next-auth": "^4.24.11"
   }
 }
