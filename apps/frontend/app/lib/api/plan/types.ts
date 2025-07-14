@@ -12,6 +12,7 @@ export interface CreatePlanDto {
   monthlyContribution: number;
   expectedReturnRate: number;
   duration: number;
+  userId: string;
 }
 
 export interface SimulationResult {
@@ -31,6 +32,6 @@ export interface RetirementPlan {
   monthlyContribution: number;
   expectedReturnRate: number;
   duration: number;
-  userId: number;
+  userId: string;
   createdAt: string;
 }

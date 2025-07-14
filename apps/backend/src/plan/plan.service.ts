@@ -73,6 +73,9 @@ export class PlanService {
       throw new Error(`Ya existe un plan con el código: ${data.code}`);
     }
 
+    //const prismaUser = await this.prisma.user.findUnique({
+    //  where : {email: session}
+
     return this.prisma.plan.create({
       data: {
         name: data.name,
@@ -83,6 +86,7 @@ export class PlanService {
         duration: data.duration,
         monthlyContribution: data.monthlyContribution,
         expectedReturnRate: data.expectedReturnRate,
+        userId: data.userId,
       },
     });
   }

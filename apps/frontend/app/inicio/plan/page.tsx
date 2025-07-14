@@ -1,9 +1,20 @@
-import PlanForm from "@/app/components/planForm";
+import { getServerSession } from "next-auth";
+import { authoptions } from "@/app/api/auth/[...nextauth]/route";
+import { PrismaClient } from "@prisma/client";
+import RetirementForm from "@/app/components/planForm";
 
-export default function Home() {
+export default async function Home() {
+  const session = await getServerSession(authoptions);
+  const prisma = new PrismaClient();
+
+  const prismaUser = await prisma.user.findUnique({
+    where: { email: session.user.email },
+  });
+
+  // Pasar el userId como prop al componente cliente
   return (
     <main className="min-h-screen">
-      <PlanForm />
+      <RetirementForm userId={prismaUser.id} />
     </main>
   );
 }

@@ -29,6 +29,7 @@ describe("PlanController", () => {
         monthlyContribution: 100,
         expectedReturnRate: 5,
         duration: duration,
+        userId: "test-user-id",
       };
 
       const result: SimulationResult[] = planController.simulatePlan(mockInput);

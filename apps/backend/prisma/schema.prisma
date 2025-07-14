@@ -49,7 +49,8 @@ model Asset {
 
 model Plan {
   id                  Int      @id @default(autoincrement())
-  userId              Int      @default(1) //por ahora, solo un usuario
+  userId              String      //@default(1) //por ahora, solo un usuario
+  user                User     @relation(fields: [userId], references: [id])
   name                String
   code                String   @unique
   objective           Int
@@ -65,11 +66,59 @@ model Plan {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        String      @id @default(cuid()) //@default(autoincrement())
   name      String
   email     String   @unique
 
-  // plans     Plan[]   // Relation to Plan
+  plans     Plan[]   // Relation to Plan
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("user")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+ 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  @@unique([provider, providerAccountId])
+}
+ 
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+ 
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+ 
+  @@unique([identifier, token])
 }

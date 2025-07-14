@@ -93,4 +93,7 @@ export class CreatePlanDto {
   @Min(0)
   @Max(100)
   duration!: number;
+
+  @IsNotEmpty()
+  userId!: string;
 }

@@ -11,6 +11,7 @@ export async function createPlan(plan: CreatePlanDto): Promise<{
   monthlyContribution: number;
   createdAt: string;
   expectedReturnRate: number;
+  userId: string;
 }> {
   const api_url = process.env.NEXT_PUBLIC_API_URL;
   if (!api_url) {
