@@ -86,7 +86,7 @@ export class PlanService {
         duration: data.duration,
         monthlyContribution: data.monthlyContribution,
         expectedReturnRate: data.expectedReturnRate,
-        userId: data.userId,
+        userId: data.userId, // Asegúrate de que el DTO tenga userId
       },
     });
   }

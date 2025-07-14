@@ -23,7 +23,7 @@ export default function RetirementForm(userId: string) {
     monthlyContribution: 0,
     expectedReturnRate: 0,
     duration: 0,
-    userId: userId, // Use the user ID from the session
+    userId: userId.userId, // Use the user ID from the session
   });
 
   const [simulationData, setSimulationData] = useState<SimulationResult[]>([]);
@@ -95,7 +95,7 @@ export default function RetirementForm(userId: string) {
             newErrors[name] = "El objetivo debe ser un número válido";
           } else if (value < 0) {
             newErrors[name] = "El objetivo debe ser positivo";
-          } else if (value > 10000000) {
+          } else if (value > 10000000000) {
             newErrors[name] = "El objetivo es demasiado alto";
           } else {
             delete newErrors[name];
