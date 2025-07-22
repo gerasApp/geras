@@ -15,8 +15,8 @@ export default function Sidebar() {
       <aside className="flex max-w-64 min-h-screen  flex-col bg-white border-r border-gray-200">
         {" "}
         {/* Corregir lo de min-h-screen*/}
-        {/* Logo Temporal */}
-        <div className="flex h-16 items-center px-6">
+        {/* Logo Geras */}
+        <div className="flex h-16 items-center px-6 mb-6">
           <img
             src="/geras-logo-3.svg"
             alt="Logo"
@@ -72,8 +72,7 @@ export default function Sidebar() {
           ></path>
         </div>
         {/* Navigation */}
-        {/*<nav className="flex-1 px-4 py-4 space-y-1"> */}
-        <nav className={`${inter.className} flex-1 px-4 py-4 space-y-1`}>
+        <nav className={`${inter.className} flex-1 px-2 py-4 space-y-1`}>
           <NavLinks />
         </nav>
         {/* Footer */}
