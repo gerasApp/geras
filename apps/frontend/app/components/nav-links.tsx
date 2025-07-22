@@ -13,6 +13,7 @@ import clsx from "clsx";
 const links = [
   { name: "Inicio", href: "/inicio", icon: HomeIcon },
   { name: "Plan de retiro", href: "/inicio/plan", icon: ChartBarIcon },
+  { name: "Planes", href: "/inicio/planes", icon: ChartBarIcon },
   {
     name: "Seguimiento",
     href: "/inicio/seguimiento",
