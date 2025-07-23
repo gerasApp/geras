@@ -78,7 +78,12 @@ export default function Sidebar() {
         </nav>
         {/* Footer */}
         <div className="flex h-16 items-center px-6 border-t border-gray-200">
-          <Image src={session?.user?.image} width={40} height={40} alt="Foto" />
+          <Image
+            src={session?.user?.image ?? "default-avatar.png"}
+            width={40}
+            height={40}
+            alt="Foto"
+          />
           {session?.user?.name} <br />
           <button
             onClick={() => signOut()}

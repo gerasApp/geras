@@ -11,10 +11,11 @@ import PlanChart from "@/app/components/planChart";
 import { simulatePlan } from "@/app/lib/api/plan/simulate";
 import { createPlan } from "@/app/lib/api/plan/create";
 
-export default function RetirementForm(userId: string) {
+export default function RetirementForm({ userId }: { userId: string }) {
   const router = useRouter();
 
   const [plan, setPlan] = useState<RetirementPlan>({
+    id: 0,
     name: "",
     code: "",
     objective: 0,
@@ -23,7 +24,8 @@ export default function RetirementForm(userId: string) {
     monthlyContribution: 0,
     expectedReturnRate: 0,
     duration: 0,
-    userId: userId.userId, // Use the user ID from the session
+    userId: userId, // Use the user ID from the session
+    createdAt: "",
   });
 
   const [simulationData, setSimulationData] = useState<SimulationResult[]>([]);

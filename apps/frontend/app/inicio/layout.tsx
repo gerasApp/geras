@@ -1,7 +1,7 @@
 import SideBar from "@/app/components/sidebar";
 import { Providers } from "@/app/components/SessionProvider";
 import { getServerSession } from "next-auth";
-import { authoptions } from "@/app/api/auth/[...nextauth]/route";
+import { authoptions } from "@/app/lib/auth";
 import { redirect } from "next/navigation";
 
 export default async function Layout({
