@@ -1,5 +1,9 @@
 import { montserrat } from "@/app/components/fonts";
 
 export default function Page() {
-  return <p className={montserrat.className}>Configuración</p>;
+  return (
+    <div className="flex flex-col h-screen">
+      <p className={montserrat.className}>Configuración</p>
+    </div>
+  );
 }
