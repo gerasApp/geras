@@ -17,6 +17,11 @@ export const authoptions = {
       clientSecret: process.env.GITHUB_SECRET ?? "",
     }),
   ],
+  /* 
+    Descomentar para cambiar el formlario predeterminado de next-auth
+    pages: { 
+    signIn: "/auth/signin",
+  },*/
 };
 
 export const handler = NextAuth(authoptions);
