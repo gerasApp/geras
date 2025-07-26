@@ -1,9 +1,9 @@
-import { montserrat } from "@/app/components/fonts";
+import { HelveticaWorld } from "@/app/fonts";
 
 export default function Page() {
   return (
     <div className="flex flex-col h-screen">
-      <p className={montserrat.className}>Configuración</p>
+      <p className={HelveticaWorld.className}>Configuración</p>
     </div>
   );
 }

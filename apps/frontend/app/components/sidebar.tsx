@@ -4,7 +4,7 @@ import { UserCircleIcon } from "@heroicons/react/24/outline";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import { inter } from "@/app/components/fonts";
+import { inter, HelveticaWorld, ProximaNova } from "@/app/fonts";
 import { handleClientScriptLoad } from "next/script";
 
 //Habria que hacer que esto se esconda en un menu para celular asi no ocupa tanto espacio
@@ -92,12 +92,14 @@ export default function Sidebar() {
           ></path>
         </div>
         {/* Navigation */}
-        <nav className={`${inter.className} flex-1 px-2 py-4 space-y-1`}>
+        <nav
+          className={`${HelveticaWorld.className} flex-1 px-2 py-4 space-y-1`}
+        >
           <NavLinks />
         </nav>
         {/* Footer */}
         <div
-          className={`${inter.className} relative flex h-16 items-center px-15`}
+          className={`${HelveticaWorld.className} relative flex h-16 items-center px-15`}
         >
           <button
             onClick={() => setPopoverOpen((open) => !open)}
