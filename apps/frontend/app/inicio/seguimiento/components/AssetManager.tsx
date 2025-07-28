@@ -187,8 +187,8 @@ export default function AssetManager({
       </div>
 
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-6 rounded-lg w-full max-w-md">
+        <div className="fixed inset-0 flex items-center justify-center backdrop-blur-xs">
+          <div className="bg-white p-6 rounded-lg w-full max-w-md shadow-lg border border-gray-200 max-h-[90vh] overflow-y-auto">
             <h3 className="text-lg font-medium mb-4">Agregar Nuevo Activo</h3>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>

@@ -79,10 +79,6 @@ body {
   font-family: "HelveticaWorld", "ProximaNova", ui-sans-serif, system-ui;
 }
 
-.img-hover-brand-primary:hover {
-  border-color: var(--color-brand-primary) !important;
-}
-
 /* Header Styles */
 h1,
 .h1 {
@@ -100,6 +96,12 @@ h2,
   font-size: 1.875rem; /* 30px */
   color: var(--color-brand-secondary);
   margin-bottom: 0.75rem;
+}
+h3,
+.h3 {
+  font-family: "HelveticaWorld";
+  font-weight: 600;
+  font-size: 1rem; /* 24px */
 }
 
 /* HelveticaWorld Utility Classes */
@@ -119,4 +121,8 @@ h2,
   font-family: "HelveticaWorld";
   font-weight: 400;
   font-style: italic;
+}
+
+.img-hover-brand-primary:hover {
+  border-color: var(--color-brand-primary) !important;
 }
