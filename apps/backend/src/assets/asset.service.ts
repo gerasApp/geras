@@ -7,8 +7,17 @@ import { CreateAssetDto, UpdateAssetDto } from "@geras/types";
 export class AssetService {
   constructor(private prisma: PrismaService) {}
 
-  async getAllAssets(): Promise<Asset[]> {
+  /**
+   * Devuelve solo los assets cuyos planes pertenecen al userId pasado
+   */
+  async getAllAssets(userId: string): Promise<Asset[]> {
     const assets = await this.prisma.asset.findMany({
+      where: {
+        // sólo los assets cuyo plan tenga este userId
+        plan: {
+          userId: userId,
+        },
+      },
       include: {
         plan: true,
       },

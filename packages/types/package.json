@@ -12,7 +12,12 @@
     ".": {
       "types": "./src/index.ts",
       "default": "./dist/index.js"
-    }
+    },
+    "./user": {
+     "types": "./src/user.ts",
+     "import": "./dist/user.js",
+     "require": "./dist/user.js"
+   }
   },
   "devDependencies": {
     "@geras/eslint-config": "workspace:*",

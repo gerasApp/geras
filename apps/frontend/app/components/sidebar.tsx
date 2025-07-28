@@ -6,7 +6,13 @@ import Image from "next/image";
 import { inter } from "@/app/components/fonts";
 
 //Habria que hacer que esto se esconda en un menu para celular asi no ocupa tanto espacio
-export default function Sidebar() {
+
+export type SideBarProps = {
+  userImage: string;
+  userName: string;
+};
+
+export default function SideBar({ userImage, userName }: SideBarProps) {
   const { data: session } = useSession();
   //console.log("Session data:", session);
 
@@ -79,12 +85,12 @@ export default function Sidebar() {
         {/* Footer */}
         <div className="flex h-16 items-center px-6 border-t border-gray-200">
           <Image
-            src={session?.user?.image ?? "default-avatar.png"}
+            src={userImage ?? "/default-avatar.png"}
             width={40}
             height={40}
             alt="Foto"
           />
-          {session?.user?.name} <br />
+          {userName} <br />
           <button
             onClick={() => signOut()}
             className="ml-2 text-blue-500 hover:underline"

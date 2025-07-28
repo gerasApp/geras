@@ -1,20 +1,68 @@
-// lib/auth.ts
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { PrismaClient } from "@prisma/client";
+import { NextAuthOptions, Session } from "next-auth";
+import { type JWT } from "next-auth/jwt";
+import type { Account, User as NextAuthUser } from "next-auth";
 
-export const authoptions = {
-  adapter: PrismaAdapter(new PrismaClient()),
+export const authoptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_ID ?? "",
-      clientSecret: process.env.GOOGLE_SECRET ?? "",
+      clientId: process.env.GOOGLE_ID!,
+      clientSecret: process.env.GOOGLE_SECRET!,
     }),
     GithubProvider({
-      clientId: process.env.GITHUB_ID ?? "",
-      clientSecret: process.env.GITHUB_SECRET ?? "",
+      clientId: process.env.GITHUB_ID!,
+      clientSecret: process.env.GITHUB_SECRET!,
     }),
   ],
+  session: {
+    strategy: "jwt",
+  },
+  callbacks: {
+    async jwt({
+      token,
+      account,
+      user,
+    }: {
+      token: JWT;
+      account?: Account | null;
+      user?: NextAuthUser | null;
+    }): Promise<JWT> {
+      if (account && user) {
+        try {
+          const res = await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/auth/social`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                provider: account.provider,
+                providerAccountId: account.providerAccountId,
+                idToken: account.id_token,
+                accessToken: account.access_token,
+                profile: user,
+              }),
+            },
+          );
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          const { accessToken: backendToken } = await res.json();
+          token.accessToken = backendToken;
+        } catch (err) {
+          console.error("Error obteniendo JWT del backend:", err);
+        }
+      }
+      return token;
+    },
+    async session({
+      session,
+      token,
+    }: {
+      session: Session;
+      token: JWT;
+    }): Promise<Session> {
+      session.user.accessToken = token.accessToken as string;
+      return session;
+    },
+  },
 };

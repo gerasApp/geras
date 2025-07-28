@@ -6,28 +6,34 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
   UsePipes,
+  Req,
   ValidationPipe,
 } from "@nestjs/common";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { AssetService } from "./asset.service";
 import { CreateAssetDto } from "@geras/types";
+import { AuthGuard } from "@nestjs/passport";
 
 @ApiTags("assets")
 @Controller("assets")
 @UsePipes(new ValidationPipe({ transform: true }))
+@UseGuards(AuthGuard("jwt"))
 export class AssetController {
   constructor(private readonly assetService: AssetService) {}
 
   @Get()
-  @ApiOperation({ summary: "Obtener todos los activos" })
+  @ApiOperation({ summary: "Obtener todos los activos del usuario" })
   @ApiResponse({
     status: 200,
     description: "Lista de activos obtenida exitosamente",
   })
-  async getAllAssets() {
+  async getAllAssets(@Req() req: any) {
     try {
-      const assets = await this.assetService.getAllAssets();
+      const assets = await this.assetService.getAllAssets(
+        req.user.id as string,
+      );
       return assets;
     } catch (error: any) {
       return {

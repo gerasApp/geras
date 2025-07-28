@@ -3,7 +3,8 @@
   "compilerOptions": {
     "paths": {
       "@/*": ["./*"]
-    }
+    },
+    "typeRoots": ["./app/types", "./node_modules/@types"]
   },
   "include": [
     "app/**/*.ts",

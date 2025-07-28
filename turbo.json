@@ -6,12 +6,12 @@
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": [".next/**", "!.next/cache/**", "dist/**"],
-      "env": ["API_URL", "FRONTEND_URL", "PORT"]
+      "env": ["API_URL", "FRONTEND_URL", "PORT","JWT_SECRET"]
     },
     "start": {
       "persistent": true,
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "env": ["API_URL", "FRONTEND_URL", "PORT"]
+      "env": ["API_URL", "FRONTEND_URL", "PORT","JWT_SECRET"]
     },
     "format:fix": {
       "dependsOn": ["^format:fix"]
