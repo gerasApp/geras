@@ -5,6 +5,9 @@ import { type JWT } from "next-auth/jwt";
 import type { Account, User as NextAuthUser } from "next-auth";
 
 export const authoptions: NextAuthOptions = {
+  pages: {
+    error: "/auth/error",
+  },
   secret: process.env.NEXTAUTH_SECRET,
   providers: [
     GoogleProvider({
@@ -20,6 +23,39 @@ export const authoptions: NextAuthOptions = {
     strategy: "jwt",
   },
   callbacks: {
+    async signIn({
+      user,
+      account,
+      profile,
+    }: {
+      user?: NextAuthUser | null;
+      account?: Account | null;
+      profile?: Record<string, any>;
+    }) {
+      if (account && profile) {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/auth/social`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              provider: account.provider,
+              providerAccountId: account.providerAccountId,
+              accessToken: account.access_token,
+              idToken: account.id_token,
+              profile,
+            }),
+          },
+        );
+        if (!res.ok) {
+          // extraemos mensaje de error para pasarlo como código
+          const { message } = await res.json().catch(() => ({}));
+          // redirige a /auth/error?error=Ya existe…
+          throw new Error(encodeURIComponent(message || "OAuthError"));
+        }
+      }
+      return true;
+    },
     async jwt({
       token,
       account,

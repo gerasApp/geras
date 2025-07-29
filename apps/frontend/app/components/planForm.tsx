@@ -97,7 +97,7 @@ export default function RetirementForm({ userId }: { userId: string }) {
             newErrors[name] = "El objetivo debe ser un número válido";
           } else if (value < 0) {
             newErrors[name] = "El objetivo debe ser positivo";
-          } else if (value > 10000000000) {
+          } else if (value > 10000000) {
             newErrors[name] = "El objetivo es demasiado alto";
           } else {
             delete newErrors[name];

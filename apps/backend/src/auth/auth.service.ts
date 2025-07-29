@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { PrismaService } from "../prisma/prisma.service";
 
@@ -26,8 +26,20 @@ export class AuthService {
 
     let user = account?.user;
 
-    // 2) Si no existe, creamos user + account
+    // 2) Si no existe, creamos user + account si no existe otro con mail
     if (!user) {
+      if (profile.email) {
+        const existingUser = await this.prisma.user.findUnique({
+          where: { email: profile.email },
+        });
+        if (existingUser) {
+          // rechazamos el login vinculando un mensaje de error
+          throw new BadRequestException(
+            "Ya existe una cuenta con ese email usando otro proveedor. " +
+              "Por favor inicia sesión con el proveedor original.",
+          );
+        }
+      }
       user = await this.prisma.user.create({
         data: {
           email: profile.email!,
