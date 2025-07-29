@@ -6,15 +6,19 @@ import {
   Param,
   Put,
   Get,
+  Req,
+  UseGuards,
 } from "@nestjs/common";
 import { PlanService } from "./plan.service";
 import type { SimulationResult } from "@geras/types";
 import { ApiOperation, ApiResponse, ApiTags, ApiBody } from "@nestjs/swagger";
 import { CreatePlanDto } from "@geras/types";
+import { AuthGuard } from "@nestjs/passport";
 
 // Este controlador se encarga de manejar las peticiones relacionadas con los planes
 @ApiTags("Planes")
 @Controller("plan")
+@UseGuards(AuthGuard("jwt"))
 export class PlanController {
   constructor(private readonly planService: PlanService) {}
 
@@ -109,9 +113,9 @@ export class PlanController {
     status: 200,
     description: "Lista de planes obtenida exitosamente",
   })
-  async getAllPlans() {
+  async getAllPlans(@Req() req: any) {
     try {
-      const plans = await this.planService.getAllPlans();
+      const plans = await this.planService.getAllPlans(req.user.id as string);
       return plans;
     } catch (error: any) {
       return {

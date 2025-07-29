@@ -1,17 +1,18 @@
-import { getSession } from "next-auth/react";
+//import { getSession } from "next-auth/react";
 import { Asset, CreateAssetDto, UpdateAssetDto } from "./types";
+import { withAuthHeaders } from "../../withAuthHeaders";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
 
-async function withAuthHeaders(): Promise<HeadersInit> {
-  const session = await getSession();
-  const token = session?.user.accessToken;
-  if (!token) throw new Error("Usuario no autenticado");
-  return {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${token}`,
-  };
-}
+//async function withAuthHeaders(): Promise<HeadersInit> {
+//  const session = await getSession();
+//  const token = session?.user.accessToken;
+//  if (!token) throw new Error("Usuario no autenticado");
+//  return {
+//    "Content-Type": "application/json",
+//    Authorization: `Bearer ${token}`,
+//  };
+//}
 
 export async function getAllAssets(): Promise<Asset[]> {
   const headers = await withAuthHeaders();

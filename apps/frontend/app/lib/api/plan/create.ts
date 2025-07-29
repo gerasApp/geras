@@ -1,3 +1,4 @@
+import { withAuthHeaders } from "../../withAuthHeaders";
 import { CreatePlanDto } from "./types";
 
 export async function createPlan(plan: CreatePlanDto): Promise<{
@@ -17,12 +18,10 @@ export async function createPlan(plan: CreatePlanDto): Promise<{
   if (!api_url) {
     throw new Error("NEXT_PUBLIC_API_URL no está definida");
   }
-
+  const headers = await withAuthHeaders();
   const response = await fetch(`${api_url}/plan/create`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: headers,
     body: JSON.stringify(plan),
   });
 

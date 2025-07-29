@@ -1,14 +1,14 @@
+import { withAuthHeaders } from "../../withAuthHeaders";
 import { RetirementPlan } from "./types";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
 
 export async function getAllPlans(): Promise<RetirementPlan[]> {
   try {
+    const headers = await withAuthHeaders();
     const response = await fetch(`${API_BASE_URL}/plan`, {
       method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: headers,
     });
 
     if (!response.ok) {

@@ -1,3 +1,4 @@
+import { withAuthHeaders } from "../../withAuthHeaders";
 import { RetirementPlan, SimulationResult } from "./types";
 
 export async function simulatePlan(
@@ -7,11 +8,10 @@ export async function simulatePlan(
   if (!api_url) {
     throw new Error("NEXT_PUBLIC_API_URL no está definida");
   }
+  const headers = await withAuthHeaders();
   const response = await fetch(`${api_url}/plan/simulate`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: headers,
     body: JSON.stringify(plan),
   });
 

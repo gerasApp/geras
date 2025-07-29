@@ -47,11 +47,14 @@ export class PlanService {
     return results;
   }
 
-  async getAllPlans(): Promise<any[]> {
+  async getAllPlans(userId: string): Promise<any[]> {
     try {
       const plans = await this.prisma.plan.findMany({
         include: {
           assets: true,
+        },
+        where: {
+          userId: userId,
         },
         orderBy: {
           createdAt: "desc",
