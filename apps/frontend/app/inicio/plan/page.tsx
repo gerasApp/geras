@@ -1,20 +1,18 @@
 import { getServerSession } from "next-auth";
 import { authoptions } from "@/app/api/auth/[...nextauth]/route";
 import { PrismaClient } from "@prisma/client";
-import RetirementForm from "@/app/components/planForm";
+import PlanRetiroPageWrapper from "./PlanRetiroPageWrapper";
 
 export default async function Home() {
   const session = await getServerSession(authoptions);
   const prisma = new PrismaClient();
-
-  const prismaUser = await prisma.user.findUnique({
-    where: { email: session.user.email },
-  });
-
-  // Pasar el userId como prop al componente cliente
-  return (
-    <main className="min-h-screen">
-      <RetirementForm userId={prismaUser.id} />
-    </main>
-  );
+  const userEmail = session?.user?.email;
+  let userId = "";
+  if (userEmail) {
+    const prismaUser = await prisma.user.findUnique({
+      where: { email: userEmail },
+    });
+    userId = prismaUser?.id || "";
+  }
+  return <PlanRetiroPageWrapper userId={userId} />;
 }
