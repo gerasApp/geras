@@ -12,8 +12,8 @@ function ChatPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
     if (!input.trim()) return;
     setMessages((msgs) => [
       ...msgs,
-      { sender: "user", text: input },
-      { sender: "bot", text: "hola" }, // Hardcoded bot response
+      // { sender: "user", text: input }, // Disabled until next sprint
+      { sender: "bot", text: "Proximamente, Jero para ayudarte" }, // Hardcoded bot response
     ]);
     setInput("");
   }
