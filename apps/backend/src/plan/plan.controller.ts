@@ -79,9 +79,9 @@ export class PlanController {
   }
 
   @Put(":id")
-  @ApiOperation({ summary: "Actualizar un activo" })
-  @ApiResponse({ status: 200, description: "Activo actualizado exitosamente" })
-  @ApiResponse({ status: 404, description: "Activo no encontrado" })
+  @ApiOperation({ summary: "Actualizar un plan" })
+  @ApiResponse({ status: 200, description: "Plan actualizado exitosamente" })
+  @ApiResponse({ status: 404, description: "Plan no encontrado" })
   @ApiResponse({ status: 400, description: "Datos de entrada inválidos" })
   async updatePlan(
     @Param("id") id: string,
