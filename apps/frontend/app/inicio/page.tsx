@@ -1,5 +1,5 @@
-import { montserrat } from "@/app/components/fonts";
+import { HelveticaWorld } from "@/app/fonts";
 
 export default function Page() {
-  return <p className={montserrat.className}>Home Page</p>;
+  return <p className={HelveticaWorld.className}>Home Page</p>;
 }
