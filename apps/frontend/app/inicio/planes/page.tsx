@@ -32,7 +32,9 @@ export default function PlanesPage() {
         const data = await getAllPlans();
         setPlans(data);
       } catch (err: any) {
-        setError("Error al cargar los planes");
+        setError(
+          "Error al cargar los planes: " + (err.message || "Desconocido"),
+        );
       } finally {
         setLoading(false);
       }

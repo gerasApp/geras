@@ -6,12 +6,12 @@
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": [".next/**", "!.next/cache/**", "dist/**"],
-      "env": ["API_URL", "FRONTEND_URL", "PORT","JWT_SECRET"]
+      "env": ["API_URL", "FRONTEND_URL", "PORT","JWT_SECRET","NEXTAUTH_SECRET","GOOGLE_ID","GOOGLE_CLIENT","GITHUB_ID","GITHUB_CLIENT"]
     },
     "start": {
       "persistent": true,
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "env": ["API_URL", "FRONTEND_URL", "PORT","JWT_SECRET"]
+      "env": ["API_URL", "FRONTEND_URL", "PORT","JWT_SECRET","NEXTAUTH_SECRET","GOOGLE_ID","GOOGLE_CLIENT","GITHUB_ID","GITHUB_CLIENT"]
     },
     "format:fix": {
       "dependsOn": ["^format:fix"]

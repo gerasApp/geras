@@ -1,10 +1,11 @@
+"use client"; // FIX RÁPIDO PARA QUE NO ROMPA EL BUILD, PERO CREO QUE CUANDO LO USEMOS VA A HABER QUE CAMBIARLO
 import React from "react";
 import { signIn, getProviders } from "next-auth/react";
 
 // TODO: ACA IRIA EL FORMULARIO PARA LOGUEARSE - TODAVIA SIGUE INCOMPLETO
 // A FUTURO EDITAR LOS BOTONES DE LOGUEO CON EL FORMATO CORRESPONDIENTE
 
-const SignInPage = async () => {
+export default async function SignInPage() {
   const providers = await getProviders();
   return (
     <div
@@ -52,6 +53,4 @@ const SignInPage = async () => {
       </button>
     </div>
   );
-};
-
-export default SignInPage;
+}

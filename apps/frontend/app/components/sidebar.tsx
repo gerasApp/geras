@@ -4,8 +4,7 @@ import { UserCircleIcon } from "@heroicons/react/24/outline";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import { inter, HelveticaWorld, ProximaNova } from "@/app/fonts";
-import { handleClientScriptLoad } from "next/script";
+import { HelveticaWorld } from "@/app/fonts";
 
 //Habria que hacer que esto se esconda en un menu para celular asi no ocupa tanto espacio
 
