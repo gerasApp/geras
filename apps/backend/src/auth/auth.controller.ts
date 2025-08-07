@@ -25,7 +25,6 @@ export class AuthController {
       };
     },
   ) {
-    console.log("Datos de OAuth recibidos:", body);
     const jwt = await this.authService.validateOAuthLogin(
       body.provider,
       body.providerAccountId,
