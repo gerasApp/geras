@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { PlanType, RetirementPlan } from "@/app/lib/api/plan/types";
 import { getAllPlans } from "@/app/lib/api/plan/getAll";
 import { updatePlan } from "@/app/lib/api/plan/update";
+import Button from "@/app/components/Button";
 
 function getPlanTypeLabel(type: PlanType) {
   switch (type) {
@@ -148,12 +149,7 @@ export default function PlanesPage() {
                   Creado: {new Date(plan.createdAt).toLocaleDateString()}
                 </div>
               </div>
-              <button
-                className="mt-4 md:mt-0 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
-                onClick={() => handleEditClick(plan)}
-              >
-                Editar
-              </button>
+              <Button onClick={() => handleEditClick(plan)}>Editar</Button>
             </div>
           ))}
         </div>
@@ -161,7 +157,7 @@ export default function PlanesPage() {
 
       {/* Edit Popup */}
       {showEdit && editPlan && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 flex items-center justify-center z-50 p-4 backdrop-blur-xs">
           <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full mx-4 p-8 relative">
             <button
               className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
@@ -271,21 +267,17 @@ export default function PlanesPage() {
               </div>
             </form>
             {editError && <div className="text-red-500 mt-2">{editError}</div>}
-            <div className="flex justify-end mt-6">
-              <button
-                className="bg-gray-300 text-gray-700 px-4 py-2 rounded mr-2"
+            <div className="flex justify-end space-x-3 mt-4">
+              <Button
+                variant="secondary"
                 onClick={handleEditClose}
                 disabled={editLoading}
               >
                 Cancelar
-              </button>
-              <button
-                className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
-                onClick={handleEditSave}
-                disabled={editLoading}
-              >
+              </Button>
+              <Button onClick={handleEditSave} disabled={editLoading}>
                 {editLoading ? "Guardando..." : "Guardar"}
-              </button>
+              </Button>
             </div>
           </div>
         </div>

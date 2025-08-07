@@ -317,7 +317,7 @@ export default function AssetManager({
       )}
 
       {isEditModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <div className="fixed inset-0 flex items-center justify-center z-50 p-4 backdrop-blur-xs">
           <div className="bg-white p-6 rounded-lg w-full max-w-md">
             <h3 className="text-lg font-medium mb-4">Editar Activo</h3>
             <form onSubmit={handleEditSubmit} className="space-y-4">
@@ -448,19 +448,14 @@ export default function AssetManager({
                 />
               </div>
               <div className="flex justify-end space-x-3">
-                <button
+                <Button
                   type="button"
                   onClick={() => setIsEditModalOpen(false)}
-                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
+                  variant="secondary"
                 >
                   Cancelar
-                </button>
-                <button
-                  type="submit"
-                  className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
-                >
-                  Guardar
-                </button>
+                </Button>
+                <Button type="submit">Guardar</Button>
               </div>
             </form>
           </div>

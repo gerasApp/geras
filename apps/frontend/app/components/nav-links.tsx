@@ -5,6 +5,7 @@ import {
   ChartBarIcon,
   MagnifyingGlassIcon,
   Cog6ToothIcon,
+  DocumentTextIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -13,7 +14,7 @@ import clsx from "clsx";
 const links = [
   { name: "Inicio", href: "/inicio", icon: HomeIcon },
   { name: "Plan de retiro", href: "/inicio/plan", icon: ChartBarIcon },
-  { name: "Planes", href: "/inicio/planes", icon: ChartBarIcon },
+  { name: "Planes", href: "/inicio/planes", icon: DocumentTextIcon },
   {
     name: "Seguimiento",
     href: "/inicio/seguimiento",
