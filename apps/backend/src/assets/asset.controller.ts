@@ -46,8 +46,9 @@ export class AssetController {
   @ApiOperation({ summary: "Crear un nuevo activo" })
   @ApiResponse({ status: 201, description: "Activo creado exitosamente" })
   @ApiResponse({ status: 400, description: "Datos de entrada inválidos" })
-  async createAsset(@Body() createAssetDto: CreateAssetDto) {
+  async createAsset(@Body() createAssetDto: CreateAssetDto, @Req() req: any) {
     try {
+      createAssetDto.userId = req.user.id; // Set userId from the request
       const newAsset = await this.assetService.createAsset(createAssetDto);
       return newAsset;
     } catch (error: any) {

@@ -22,6 +22,7 @@ export interface Asset {
   createdAt: string;
   updatedAt: string;
   planId?: number;
+  userId?: string;
 }
 
 export interface CreateAssetDto {
@@ -31,6 +32,7 @@ export interface CreateAssetDto {
   risk: RiskLevel;
   description: string;
   planId?: number;
+  userId?: string;
 }
 
 export type UpdateAssetDto = Partial<CreateAssetDto>;

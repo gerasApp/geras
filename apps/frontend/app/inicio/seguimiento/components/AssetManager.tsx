@@ -39,6 +39,7 @@ export default function AssetManager({
     risk: RiskLevel.MEDIUM,
     description: "",
     planId: undefined,
+    userId: "",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -52,6 +53,7 @@ export default function AssetManager({
       risk: RiskLevel.MEDIUM,
       description: "",
       planId: undefined,
+      userId: "",
     });
   };
 
@@ -70,6 +72,7 @@ export default function AssetManager({
         risk: editingAsset.risk,
         description: editingAsset.description,
         planId: editingAsset.planId,
+        userId: editingAsset.userId,
       });
       setIsEditModalOpen(false);
       setEditingAsset(null);

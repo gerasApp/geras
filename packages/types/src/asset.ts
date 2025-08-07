@@ -24,4 +24,6 @@ export interface Asset {
   market?: string; // Market or exchange where the asset is traded
   createdAt?: Date;
   updatedAt?: Date;
+  planId?: number;
+  userId?: string;
 }

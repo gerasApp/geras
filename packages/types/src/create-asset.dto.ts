@@ -61,4 +61,13 @@ export class CreateAssetDto {
   @IsNumber()
   @IsOptional()
   planId?: number;
+
+  @ApiProperty({
+    description: "ID del usuario al que pertenece el activo",
+    example: 1,
+    required: false,
+  })
+  @IsString()
+  @IsOptional()
+  userId?: string;
 }

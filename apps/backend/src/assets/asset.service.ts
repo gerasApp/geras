@@ -13,13 +13,10 @@ export class AssetService {
   async getAllAssets(userId: string): Promise<Asset[]> {
     const assets = await this.prisma.asset.findMany({
       where: {
-        // sólo los assets cuyo plan tenga este userId
-        plan: {
-          userId: userId,
-        },
+        userId: userId,
       },
       include: {
-        plan: true,
+        user: true,
       },
     });
     return assets.map((asset) => ({
@@ -32,6 +29,7 @@ export class AssetService {
       createdAt: asset.createdAt,
       updatedAt: asset.updatedAt,
       planId: asset.planId || undefined,
+      userId: asset.userId || undefined,
     }));
   }
 
@@ -58,9 +56,11 @@ export class AssetService {
         risk: assetData.risk as any,
         description: assetData.description,
         planId: assetData.planId,
+        userId: assetData.userId,
       },
       include: {
         plan: true,
+        user: true,
       },
     });
 
@@ -74,6 +74,7 @@ export class AssetService {
       createdAt: asset.createdAt,
       updatedAt: asset.updatedAt,
       planId: asset.planId || undefined,
+      userId: asset.userId || undefined,
     };
   }
 
@@ -96,6 +97,7 @@ export class AssetService {
       createdAt: asset.createdAt,
       updatedAt: asset.updatedAt,
       planId: asset.planId || undefined,
+      userId: asset.userId || undefined,
     };
   }
 
@@ -143,6 +145,7 @@ export class AssetService {
       createdAt: updated.createdAt,
       updatedAt: updated.updatedAt,
       planId: updated.planId || undefined,
+      userId: updated.userId || undefined,
     };
   }
 

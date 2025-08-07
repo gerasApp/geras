@@ -43,6 +43,8 @@ model Asset {
   updatedAt        DateTime  @updatedAt
   planId           Int?      // Optional foreign key
   plan             Plan?     @relation(fields: [planId], references: [id])
+  userId           String?      
+  user             User?     @relation(fields: [userId], references: [id])
 
   @@map("assets") // nombre real de tabla
 }
@@ -71,6 +73,7 @@ model User {
   email     String   @unique
 
   plans     Plan[]   // Relation to Plan
+  assets    Asset[]  // Relation to Asset
   emailVerified DateTime?
   image         String?
   accounts      Account[]
