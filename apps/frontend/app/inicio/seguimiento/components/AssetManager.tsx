@@ -36,6 +36,8 @@ export default function AssetManager({
     name: "",
     type: AssetType.STOCK,
     historicalReturn: 0,
+    amount: 1,
+    purchasePrice: 0,
     risk: RiskLevel.MEDIUM,
     description: "",
     planId: undefined,
@@ -50,6 +52,8 @@ export default function AssetManager({
       name: "",
       type: AssetType.STOCK,
       historicalReturn: 0,
+      amount: 1,
+      purchasePrice: 0,
       risk: RiskLevel.MEDIUM,
       description: "",
       planId: undefined,
@@ -69,6 +73,8 @@ export default function AssetManager({
         name: editingAsset.name,
         type: editingAsset.type,
         historicalReturn: editingAsset.historicalReturn,
+        amount: editingAsset.amount,
+        purchasePrice: editingAsset.purchasePrice,
         risk: editingAsset.risk,
         description: editingAsset.description,
         planId: editingAsset.planId,
@@ -114,6 +120,12 @@ export default function AssetManager({
                 Retorno Histórico
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                Cantidad
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                Valor de compra
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
                 Riesgo
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
@@ -134,6 +146,10 @@ export default function AssetManager({
                 <td className="px-6 py-4 whitespace-nowrap">{asset.type}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   {asset.historicalReturn}%
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">{asset.amount}</td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {asset.purchasePrice}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">{asset.risk}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
@@ -240,6 +256,41 @@ export default function AssetManager({
                     setNewAsset({
                       ...newAsset,
                       historicalReturn: parseFloat(e.target.value),
+                    })
+                  }
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Cantidad
+                </label>
+                <input
+                  type="number"
+                  step={1}
+                  value={newAsset.amount}
+                  onChange={(e) =>
+                    setNewAsset({
+                      ...newAsset,
+                      amount: parseInt(e.target.value),
+                    })
+                  }
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Valor de compra
+                </label>
+                <input
+                  type="number"
+                  value={newAsset.purchasePrice}
+                  onChange={(e) =>
+                    setNewAsset({
+                      ...newAsset,
+                      purchasePrice: parseFloat(e.target.value),
                     })
                   }
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
@@ -374,6 +425,46 @@ export default function AssetManager({
                         ? {
                             ...editingAsset,
                             historicalReturn: parseFloat(e.target.value),
+                          }
+                        : null,
+                    )
+                  }
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Cantidad
+                </label>
+                <input
+                  type="number"
+                  step={1}
+                  value={editingAsset?.amount || 1}
+                  onChange={(e) =>
+                    setEditingAsset(
+                      editingAsset
+                        ? { ...editingAsset, amount: parseInt(e.target.value) }
+                        : null,
+                    )
+                  }
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Valor de compra
+                </label>
+                <input
+                  type="number"
+                  value={editingAsset?.purchasePrice || 0}
+                  onChange={(e) =>
+                    setEditingAsset(
+                      editingAsset
+                        ? {
+                            ...editingAsset,
+                            purchasePrice: parseFloat(e.target.value),
                           }
                         : null,
                     )

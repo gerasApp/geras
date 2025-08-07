@@ -37,6 +37,8 @@ model Asset {
   name             String
   type             AssetType
   historicalReturn Float
+  amount           Int       @default(1)
+  purchasePrice    Float     @default(0)
   risk             RiskLevel
   description      String?
   createdAt        DateTime  @default(now())

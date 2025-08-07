@@ -36,6 +36,22 @@ export class CreateAssetDto {
   historicalReturn!: number;
 
   @ApiProperty({
+    description: "Cantidad de unidades del activo",
+    example: 100,
+  })
+  @IsNumber()
+  @Min(0)
+  amount!: number;
+
+  @ApiProperty({
+    description: "Precio de compra del activo",
+    example: 150.75,
+  })
+  @IsNumber()
+  @Min(0)
+  purchasePrice!: number;
+
+  @ApiProperty({
     description: "Nivel de riesgo del activo",
     enum: RiskLevel,
     example: RiskLevel.MEDIUM,
