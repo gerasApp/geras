@@ -24,6 +24,8 @@ export class AssetService {
       name: asset.name,
       type: asset.type as AssetType,
       historicalReturn: asset.historicalReturn,
+      amount: asset.amount,
+      purchasePrice: asset.purchasePrice,
       risk: asset.risk as RiskLevel,
       description: asset.description || undefined,
       createdAt: asset.createdAt,
@@ -53,6 +55,8 @@ export class AssetService {
         name: assetData.name,
         type: assetData.type as any,
         historicalReturn: assetData.historicalReturn,
+        amount: assetData.amount,
+        purchasePrice: assetData.purchasePrice,
         risk: assetData.risk as any,
         description: assetData.description,
         planId: assetData.planId,
@@ -69,6 +73,8 @@ export class AssetService {
       name: asset.name,
       type: asset.type as AssetType,
       historicalReturn: asset.historicalReturn,
+      amount: asset.amount,
+      purchasePrice: asset.purchasePrice,
       risk: asset.risk as RiskLevel,
       description: asset.description || undefined,
       createdAt: asset.createdAt,
@@ -92,6 +98,8 @@ export class AssetService {
       name: asset.name,
       type: asset.type as AssetType,
       historicalReturn: asset.historicalReturn,
+      amount: asset.amount,
+      purchasePrice: asset.purchasePrice,
       risk: asset.risk as RiskLevel,
       description: asset.description || undefined,
       createdAt: asset.createdAt,
@@ -140,6 +148,8 @@ export class AssetService {
       name: updated.name,
       type: updated.type as AssetType,
       historicalReturn: updated.historicalReturn,
+      amount: updated.amount,
+      purchasePrice: updated.purchasePrice,
       risk: updated.risk as RiskLevel,
       description: updated.description || undefined,
       createdAt: updated.createdAt,
@@ -181,6 +191,14 @@ export class AssetService {
       data.historicalReturn < 0
     ) {
       throw new Error("El retorno histórico debe ser un número no negativo");
+    }
+
+    if (typeof data.amount !== "number" || data.amount < 0) {
+      throw new Error("La cantidad de activos debe ser un número no negativo");
+    }
+
+    if (typeof data.purchasePrice !== "number" || data.purchasePrice < 0) {
+      throw new Error("El valor de compra debe ser un número no negativo");
     }
 
     const validRisks = Object.values(RiskLevel);

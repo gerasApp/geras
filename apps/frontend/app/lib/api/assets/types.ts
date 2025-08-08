@@ -17,6 +17,8 @@ export interface Asset {
   name: string;
   type: AssetType;
   historicalReturn: number;
+  amount: number;
+  purchasePrice: number;
   risk: RiskLevel;
   description: string;
   createdAt: string;
@@ -29,6 +31,8 @@ export interface CreateAssetDto {
   name: string;
   type: AssetType;
   historicalReturn: number;
+  amount: number;
+  purchasePrice: number;
   risk: RiskLevel;
   description: string;
   planId?: number;

@@ -37,6 +37,8 @@ model Asset {
   name             String
   type             AssetType
   historicalReturn Float
+  amount           Int       @default(1)
+  purchasePrice    Float     @default(0)
   risk             RiskLevel
   description      String?
   createdAt        DateTime  @default(now())
@@ -55,11 +57,11 @@ model Plan {
   user                User     @relation(fields: [userId], references: [id])
   name                String
   code                String   @unique
-  objective           Int
+  objective           Decimal
   type                PlanType
-  initialAmount       Int
+  initialAmount       Decimal
   duration            Int
-  monthlyContribution Int
+  monthlyContribution Decimal
   createdAt           DateTime @default(now())
   expectedReturnRate  Float
   assets              Asset[]  // Add the reverse relation

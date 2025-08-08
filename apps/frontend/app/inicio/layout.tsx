@@ -10,7 +10,6 @@ export default async function Layout({
   children: React.ReactNode;
 }) {
   const session = await getServerSession(authoptions);
-  console.log("Session in layout:", session);
 
   if (!session) {
     redirect("/api/auth/signin");
@@ -20,7 +19,6 @@ export default async function Layout({
     userImage: session.user.image!,
     userName: session.user.name!,
   };
-  console.log("User props for sidebar:", userProps);
   return (
     <div className="flex flex-row md:overflow-hidden">
       <Providers session={session}>

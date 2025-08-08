@@ -9,6 +9,5 @@ export function Providers({
   children: React.ReactNode;
   session: Session;
 }) {
-  console.log("Session in Providers:", session);
   return <SessionProvider session={session}>{children}</SessionProvider>;
 }

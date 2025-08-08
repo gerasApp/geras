@@ -15,7 +15,6 @@ export type SideBarProps = {
 
 export default function SideBar({ userImage, userName }: SideBarProps) {
   const { data: session } = useSession();
-  //console.log("Session data:", session);
 
   /*  POPOVER que se incluye al cliquear la foto del usaurio y tiene la opción de salir */
   const [popoverOpen, setPopoverOpen] = useState(false);

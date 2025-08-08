@@ -98,7 +98,7 @@ export default function RetirementForm({ userId }: { userId: string }) {
             newErrors[name] = "El objetivo debe ser un número válido";
           } else if (value < 0) {
             newErrors[name] = "El objetivo debe ser positivo";
-          } else if (value > 10000000) {
+          } else if (value > Number.MAX_SAFE_INTEGER) {
             newErrors[name] = "El objetivo es demasiado alto";
           } else {
             delete newErrors[name];
@@ -111,7 +111,7 @@ export default function RetirementForm({ userId }: { userId: string }) {
             newErrors[name] = "El monto inicial debe ser un número válido";
           } else if (value < 0) {
             newErrors[name] = "El monto inicial debe ser positivo";
-          } else if (value > 10000000) {
+          } else if (value > 999999999999) {
             newErrors[name] = "El monto inicial es demasiado alto";
           } else {
             delete newErrors[name];
@@ -124,7 +124,7 @@ export default function RetirementForm({ userId }: { userId: string }) {
             newErrors[name] = "El aporte mensual debe ser un número válido";
           } else if (value < 0) {
             newErrors[name] = "El aporte mensual debe ser positivo";
-          } else if (value > 1000000) {
+          } else if (value > 99999999) {
             newErrors[name] = "El aporte mensual es demasiado alto";
           } else {
             delete newErrors[name];

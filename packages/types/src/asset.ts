@@ -18,6 +18,9 @@ export interface Asset {
   id: string;
   name: string;
   type: AssetType;
+  historicalReturn: number;
+  amount: number;
+  purchasePrice: number;
   riskLevel: RiskLevel;
   description?: string;
   symbol?: string; // Ticker symbol for stocks, ETFs, etc.

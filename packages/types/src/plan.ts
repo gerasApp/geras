@@ -12,12 +12,12 @@ export enum PlanType {
 export const RetirementPlanSchema = z.strictObject({
   name: z.string().min(1).max(100),
   code: z.string().min(1).max(20),
-  objective: z.number().min(0).max(10000000),
+  objective: z.number().min(0).max(Number.MAX_SAFE_INTEGER),
   type: z.nativeEnum(PlanType),
   duration: z.int().min(0).max(100),
-  initialAmount: z.number().min(0).max(10000000),
+  initialAmount: z.number().min(0).max(Number.MAX_SAFE_INTEGER),
   expectedReturnRate: z.number().min(0).max(100),
-  monthlyContribution: z.number().min(0).max(1000000),
+  monthlyContribution: z.number().min(0).max(Number.MAX_SAFE_INTEGER),
 });
 
 // Tipo TypeScript inferido automáticamente desde el schema.

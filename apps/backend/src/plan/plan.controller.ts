@@ -52,9 +52,7 @@ export class PlanController {
   @Post("create")
   async createPlan(@Body() planData: CreatePlanDto) {
     try {
-      console.log("Creando plan...");
       const newPlan = this.planService.createPlan(planData);
-      console.log("Nuevo plan creado:", newPlan);
 
       return newPlan;
     } catch (error: any) {
