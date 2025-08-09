@@ -126,12 +126,12 @@ export default function SignInPage() {
         {/* Footer */}
         <div className="text-center mt-8">
           <p className="text-sm text-[var(--color-brand-dark)] font-helvetica-regular">
-            ¿Necesitas ayuda?{" "}
+            ¿No tienes cuenta?{" "}
             <a
               href="mailto:support@geras.com"
               className="text-[var(--color-brand-primary)] hover:underline"
             >
-              Contacta soporte
+              Registrarse
             </a>
           </p>
         </div>
