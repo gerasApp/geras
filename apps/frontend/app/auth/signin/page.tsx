@@ -66,11 +66,11 @@ export default function SignInPage() {
           <div className="space-y-3">
             {providers && providers.google && (
               <button
-                onClick={() => handleSignIn(providers.google.id)}
+                onClick={() => handleSignIn(providers.google?.id!)}
                 disabled={loading !== null}
                 className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-primary)] focus:ring-offset-2 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {loading === providers.google.id ? (
+                {loading === providers.google?.id ? (
                   <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-gray-600"></div>
                 ) : (
                   <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -100,7 +100,7 @@ export default function SignInPage() {
 
             {providers && providers.github && (
               <button
-                onClick={() => handleSignIn(providers.github.id)}
+                onClick={() => handleSignIn(providers.github?.id!)}
                 disabled={loading !== null}
                 className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-[#333] text-white rounded-lg hover:bg-[#444] focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-primary)] focus:ring-offset-2 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               >
