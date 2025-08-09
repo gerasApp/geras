@@ -119,16 +119,19 @@ export class AssetService {
     this.validateAssetData(assetData);
 
     // Validate plan exists if planId is provided
-    if (assetData.planId) {
-      const plan = await this.prisma.plan.findUnique({
-        where: { id: assetData.planId },
-      });
-      if (!plan) {
-        throw new NotFoundException(
-          `Plan with ID ${assetData.planId} not found`,
-        );
-      }
-    }
+    //if (assetData.planId) {
+    //  const plan = await this.prisma.plan.findUnique({
+    //   where: { id: assetData.planId },
+    //  });
+    //  if (!plan) {
+    //    throw new NotFoundException(
+    //      `Plan with ID ${assetData.planId} not found`,
+    //    );
+    //  }
+    //}
+
+    // Así puede editar que el plan sea null
+    const planId = assetData.planId === undefined ? null : assetData.planId;
 
     const updated = await this.prisma.asset.update({
       where: { id },
@@ -136,6 +139,7 @@ export class AssetService {
         ...assetData,
         type: assetData.type as any,
         risk: assetData.risk as any,
+        planId: planId,
         updatedAt: new Date(),
       },
       include: {
