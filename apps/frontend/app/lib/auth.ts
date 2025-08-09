@@ -6,6 +6,7 @@ import type { Account, User as NextAuthUser } from "next-auth";
 
 export const authoptions: NextAuthOptions = {
   pages: {
+    signIn: "/auth/signin",
     error: "/auth/error",
   },
   secret: process.env.NEXTAUTH_SECRET,
